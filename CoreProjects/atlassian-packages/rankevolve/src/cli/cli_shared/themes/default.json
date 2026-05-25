@@ -1,0 +1,19 @@
+{
+  "name": "default",
+  "colors": {
+    "user_panel_border": "#5f87ff",
+    "user_panel_title": "#5f87ff",
+    "assistant_panel_border": "#5faf5f",
+    "assistant_panel_title": "#5faf5f",
+    "error_text": "#ff5f5f",
+    "spinner": "#ffaf00",
+    "timestamp": "#666666",
+    "input_prompt": "#5f87ff"
+  },
+  "symbols": {
+    "user_icon": "You",
+    "assistant_icon": "Assistant",
+    "thinking_spinner": "dots",
+    "input_prompt": "> "
+  }
+}

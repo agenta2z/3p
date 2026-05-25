@@ -1,0 +1,19 @@
+load("@fbcode_macros//build_defs:python_library.bzl", "python_library")
+
+oncall("ads_ranking_features")
+
+python_library(
+    name = "utils",
+    srcs = glob(["**/*.py"]),
+    deps = [
+        "fbsource//third-party/pypi/attrs:attrs",
+        "fbsource//third-party/pypi/colorama:colorama",
+        "fbsource//third-party/pypi/hydra-core:hydra-core",
+        "fbsource//third-party/pypi/jinja2:jinja2",
+        "fbsource//third-party/pypi/omegaconf:omegaconf",
+        "fbsource//third-party/pypi/pyyaml:pyyaml",
+        "fbsource//third-party/pypi/rich:rich",
+        "fbsource//third-party/pypi/tqdm:tqdm",
+    ],
+    visibility = ["//rankevolve/..."],
+)

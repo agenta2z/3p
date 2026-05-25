@@ -1,0 +1,10 @@
+load("@fbcode_macros//build_defs:python_library.bzl", "python_library")
+
+oncall("ads_ranking_features")
+
+python_library(
+    name = "cli_shared",
+    srcs = [],
+    resources = glob(["**/*"]),
+    visibility = ["//rankevolve/..."],
+)

@@ -1,0 +1,21 @@
+provider: plugboard
+model: claude-sonnet-4.5
+pipeline: usecase-code-devprod
+
+# Models requiring a different pipeline than the default.
+# Both opus 4.5 and 4.6 are routed via the 3PAI Claude Code pipeline.
+model_pipeline_overrides:
+  claude-opus-4.5: usecase-3pai-claude-code
+  claude-opus-4.6: usecase-3pai-claude-code
+api_key_env: null
+base_url: null
+max_tokens: 4096
+temperature: 0.7
+system_prompt_file: system-prompt.md
+theme: default
+
+ui:
+  panel_width: null
+  show_tokens: false
+  show_timing: true
+  streaming_refresh_hz: 15

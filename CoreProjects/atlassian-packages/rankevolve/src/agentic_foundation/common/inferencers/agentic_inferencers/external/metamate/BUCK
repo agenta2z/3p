@@ -1,0 +1,36 @@
+load("@fbcode_macros//build_defs:python_binary.bzl", "python_binary")
+load("@fbcode_macros//build_defs:python_library.bzl", "python_library")
+
+oncall("ads_ranking_features")
+
+# Library for MetaMate inferencer modules (common.py, adapters, clients, etc.).
+# The parent agentic_foundation glob stops at this package boundary,
+# so this library must be an explicit dep.
+python_library(
+    name = "metamate",
+    srcs = glob(
+        ["**/*.py"],
+        exclude = ["query_metamate.py"],
+    ),
+    deps = [
+        "fbsource//third-party/pypi/attrs:attrs",
+        "//msl/metamate/cli:metamate_graphql",
+        "//msl/metamate/if:sdk-python-types",
+    ],
+)
+
+# Standalone CLI binary for querying MetaMate.
+# Invoked by MetamateCliInferencer via subprocess (buck run).
+# This binary is self-contained — it does NOT import from sibling modules
+# (common.py, etc.) to avoid link-tree conflicts with the agentic_foundation
+# library glob.
+python_binary(
+    name = "query_metamate",
+    srcs = ["query_metamate.py"],
+    main_function = "rankevolve.src.agentic_foundation.common.inferencers.agentic_inferencers.external.metamate.query_metamate.main",
+    par_style = "xar",
+    typing = True,
+    deps = [
+        "//msl/metamate/cli:metamate_graphql",
+    ],
+)

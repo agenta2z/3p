@@ -1,0 +1,295 @@
+load("@fbcode_macros//build_defs:python_binary.bzl", "python_binary")
+load("@fbcode_macros//build_defs:python_library.bzl", "python_library")
+
+oncall("ads_ranking_features")
+
+# LLM client libraries (base, anthropic, openai, plugboard)
+# Extracted to break the dependency cycle between server_lib and agentic_foundation.
+python_library(
+    name = "llm_clients",
+    srcs = glob(["llm/**/*.py"]),
+    visibility = ["//rankevolve/..."],
+    deps = [
+        "fbsource//third-party/pypi/anthropic:anthropic",
+        "fbsource//third-party/pypi/openai:openai",
+        "//ai_productivity/plugboard/if:plugboard-if-python-clients",
+        "//ai_productivity/plugboard/if:plugboard-if-python-types",
+        "//ai_productivity/plugboard/if:stream_defs-python-types",
+        "//c2p/secure_thrift/python:client",
+        "//configerator/structs/infrasec/if:acl-python-types",
+        "//crypto/cat/py:corp_crypto_auth_token_util",
+    ] + select({
+        "DEFAULT": [],
+        "ovr_config//os:linux": [
+            "//servicerouter/client/python:async_client",
+            "//servicerouter/client/python:client_params",
+        ],
+    }),
+)
+
+# Core business logic (moved from chat_cli) + command routing
+python_library(
+    name = "server_lib",
+    srcs = [
+        "__init__.py",
+        "command_router.py",
+        "config.py",
+        "conversation.py",
+        "dual_inferencer_bridge.py",
+        "factories.py",
+        "hub_state.py",
+        "kn_arg_parser.py",
+        "kn_command_router.py",
+        "knowledge_bridge.py",
+        "schema.py",
+        "shared_loader.py",
+        "stream_bridge.py",
+        "submission_launcher.py",
+        "submission_runner.py",
+        "submission_templates_loader.py",
+        "task_types.py",
+        "tool_call_parser.py",
+        "tool_executor.py",
+        "workflow_context.py",
+    ],
+    visibility = ["//rankevolve/..."],
+    deps = [
+        "fbsource//third-party/pypi/pyyaml:pyyaml",
+        ":llm_clients",
+        "//rankevolve/src/agentic_foundation:agentic_foundation",
+        "//rankevolve/src/cli/cli_shared:cli_shared",  # @manual -- resource files (config, prompts, templates) loaded by shared_loader.py
+        "//rankevolve/src/common:common_streaming",
+        "//rankevolve/src/integrations/fblearner:fblearner",
+        "//rankevolve/src/resources:tools",
+        # Reference script library — submission_templates_loader resolves
+        # template IDs via importlib.resources from this resources target.
+        "//rankevolve/src/utils:utils",
+        # tool_executor._exec_aggregator_only_refresh lazy-imports
+        # chatbot_demo_react.backend.services.{learnings_archive,
+        # learnings_generator}; without this dep the import fails at
+        # runtime with ModuleNotFoundError and the slash command silently
+        # returns an error wrapped in a COMMAND_RESPONSE envelope.
+        # `:agent_service` is a leaf (no back-edge to server_lib),
+        # so adding it here is acyclic.
+    ],
+)
+
+# Concrete RankEvolve server service
+python_library(
+    name = "rankevolve_service_lib",
+    srcs = glob(["rankevolve_service/**/*.py"]),
+    visibility = ["//rankevolve/..."],
+    deps = [
+        "fbsource//third-party/pypi/attrs:attrs",
+        ":experiment_bridge",
+        ":experiment_combos_bridge",
+        ":implement_hypothesis_bridge",
+        ":research_propose_bridge",
+        ":server_lib",
+        "//rankevolve/src/agentic_foundation:agentic_foundation",
+        "//rankevolve/src/common:common_streaming",
+        "//rankevolve/src/resources:tools",
+        "//rankevolve/src/utils:utils",
+    ],
+)
+
+# Server entry point
+python_binary(
+    name = "rankevolve_server",
+    srcs = ["rankevolve_service/launch_server.py"],
+    main_function = "rankevolve.src.server.rankevolve_service.launch_server.main",
+    deps = [
+        ":rankevolve_service_lib",
+    ],
+)
+
+python_library(
+    name = "research_propose_bridge",
+    srcs = ["research_propose_bridge.py"],
+    deps = [
+        ":server_lib",
+        "//rankevolve/src/agentic_foundation:agentic_foundation",
+        "//rankevolve/src/agentic_foundation/common/inferencers/agentic_inferencers/external/metamate:metamate",
+        "//rankevolve/src/utils:utils",
+    ],
+)
+
+# Round 10: /experiment orchestrator bridge (Phase 2 of the local-experiment
+# plan). Standalone library so tool_executor.py can lazy-import it without
+# tightening the :server_lib ↔ :agentic_foundation cycle. Mirror of the
+# :research_propose_bridge target shape.
+python_library(
+    name = "experiment_bridge",
+    srcs = ["experiment_bridge.py"],
+    deps = [
+        ":server_lib",
+        "//rankevolve/src/agentic_foundation:agentic_foundation",
+        "//rankevolve/src/utils:utils",
+    ],
+)
+
+load("@fbcode_macros//build_defs:python_unittest.bzl", "python_unittest")
+
+python_unittest(
+    name = "test_experiment_bridge",
+    srcs = [
+        "tests/__init__.py",
+        "tests/test_experiment_bridge.py",
+    ],
+    deps = [
+        ":experiment_bridge",
+    ],
+)
+
+# Round 11: /implement-hypothesis bridge (Phase 1 of the split-experiment plan).
+# Standalone library so tool_executor.py can lazy-import it without
+# tightening the :server_lib ↔ :agentic_foundation cycle. Mirror of the
+# :experiment_bridge target shape.
+python_library(
+    name = "implement_hypothesis_bridge",
+    srcs = ["implement_hypothesis_bridge.py"],
+    deps = [
+        ":server_lib",
+        "//rankevolve/src/agentic_foundation:agentic_foundation",
+        "//rankevolve/src/utils:utils",
+    ],
+)
+
+python_unittest(
+    name = "test_implement_hypothesis_bridge",
+    srcs = [
+        "tests/__init__.py",
+        "tests/test_implement_hypothesis_bridge.py",
+    ],
+    deps = [
+        ":implement_hypothesis_bridge",
+    ],
+)
+
+python_unittest(
+    name = "test_implement_hypothesis_bridge_callbacks",
+    srcs = [
+        "tests/__init__.py",
+        "tests/test_implement_hypothesis_bridge_callbacks.py",
+    ],
+    deps = [
+        ":implement_hypothesis_bridge",
+    ],
+)
+
+python_unittest(
+    name = "test_exec_implement_hypothesis_chip_lifecycle",
+    srcs = [
+        "tests/__init__.py",
+        "tests/test_exec_implement_hypothesis_chip_lifecycle.py",
+    ],
+    deps = [
+        ":implement_hypothesis_bridge",
+        ":server_lib",
+        # Lazy import target inside _exec_implement_hypothesis →
+        # `chatbot_demo_react.backend.routes.hub_implementations_store`.
+        # Test patches that path so the dep just needs to be loadable.
+        "//rankevolve/src/webui:agent_routes",
+    ],
+)
+
+# Round 11: /experiment-hypothesis-combos bridge (Phase 2 of the split-experiment
+# plan). Thin re-export over :experiment_bridge plus the pre-flight flag check.
+python_library(
+    name = "experiment_combos_bridge",
+    srcs = ["experiment_combos_bridge.py"],
+    deps = [
+        ":experiment_bridge",
+    ],
+)
+
+python_unittest(
+    name = "test_experiment_combos_bridge",
+    srcs = [
+        "tests/__init__.py",
+        "tests/test_experiment_combos_bridge.py",
+    ],
+    deps = [
+        ":experiment_combos_bridge",
+    ],
+)
+
+# Round 11: extract monitor_cli into a python_library so its PATCH-back
+# helpers can be unit-tested in isolation. The binary still works because
+# python_binary picks up the same module via the dep edge.
+python_library(
+    name = "monitor_cli_lib",
+    srcs = [
+        "cli/__init__.py",
+        "cli/monitor_cli.py",
+    ],
+    deps = [
+        "//rankevolve/src/common:common_streaming",
+    ],
+)
+
+python_unittest(
+    name = "test_monitor_cli",
+    srcs = [
+        "cli/tests/__init__.py",
+        "cli/tests/test_monitor_cli.py",
+    ],
+    deps = [
+        ":monitor_cli_lib",
+    ],
+)
+
+# Round 10: Local-experiment CLIs (Phase 1.3 + 1.4 of the orchestrator
+# plan). Both are thin wrappers over existing infrastructure
+# (SubmissionRunner / WorkspaceStreamTailer) so a ToolAsInferencer can
+# shell out to them. See /home/zgchen/.claude/plans/humming-tinkering-wirth.md
+python_binary(
+    name = "rankevolve_train",
+    srcs = [
+        "cli/__init__.py",
+        "cli/train_cli.py",
+    ],
+    main_function = "rankevolve.src.server.cli.train_cli.main",
+    deps = [
+        ":server_lib",
+        "//rankevolve/src/common:common_streaming",
+    ],
+)
+
+python_binary(
+    name = "rankevolve_monitor",
+    main_function = "rankevolve.src.server.cli.monitor_cli.main",
+    deps = [
+        ":monitor_cli_lib",
+    ],
+)
+
+# One-shot migration: backfill role='task_ref' rows into existing
+# session_state.json files so resumed sessions show task chips inline
+# at their original conversation positions (instead of clustered at the
+# bottom). Stop the agent server before running.
+python_binary(
+    name = "migrate_session_task_refs",
+    srcs = ["migrate_session_task_refs.py"],
+    main_function = "rankevolve.src.server.migrate_session_task_refs.main",
+)
+
+# One-shot migration: move task workspaces from flat <server>/tasks/ to
+# per-session <server>/sessions/<session>/tasks/ and rewrite the absolute
+# paths persisted in every session_state.json. Stop the agent server
+# before running. Supports --dry-run.
+python_binary(
+    name = "migrate_tasks_per_session",
+    srcs = ["migrate_tasks_per_session.py"],
+    main_function = "rankevolve.src.server.migrate_tasks_per_session.main",
+)
+
+# F4-cleanup: backfill metadata.task_status onto legacy task_ref rows so
+# the React chip status restores correctly on session-load (instead of
+# defaulting to 'queued' forever for tasks completed before WS reconnect).
+# Idempotent. Stop the agent server before running. Supports --dry-run.
+python_binary(
+    name = "migrate_task_ref_status",
+    srcs = ["migrate_task_ref_status.py"],
+    main_function = "rankevolve.src.server.migrate_task_ref_status.main",
+)
