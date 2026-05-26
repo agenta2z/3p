@@ -1,0 +1,11 @@
+{
+  "name": "slack_member_info",
+  "tool_type": "Action",
+  "category": "communication",
+  "description": "Get Slack user profile information by user ID.",
+  "parameters": [
+    {"name": "user_id", "type": "string", "required": true, "description": "Slack user ID (e.g., U123)."}
+  ],
+  "returns": "JSON with user profile details.",
+  "examples": ["slack_member_info U123"]
+}

@@ -1,0 +1,191 @@
+# ============================================================================
+# Create-Role Topology: BTA (single-pass research synthesis)
+# ============================================================================
+#
+# Tool-specific topology that researches a role across N facets and synthesizes
+# them into a Role Responsibility Document. Used by the /create_role MCP tool
+# and the standalone create_role CLI:
+#   python -m openteam.server.resources.tools.create_role --max-facets N "<role>"
+#
+# Tree structure:
+#   BTA                                       single-pass facet research+synth
+#   ├── breakdown_inferencer = RovoChat       decompose role → N facets
+#   ├── worker_factory = RovoChat (homogen.)  each facet researched independently
+#   │                                         (Rovo knowledge-search grounded)
+#   └── aggregator_inferencer = RovoDevCLI    synthesize all facets into one
+#                                             coherent Role Responsibility Doc
+#                                             (CLI agent for filesystem write)
+#
+# Why three different inferencer types?
+#   - RovoChat for breakdown + workers: knowledge-search grounded (Rovo Search)
+#     can access Confluence/Jira/Atlas org context for role research.
+#   - RovoDevCLI for aggregator: needs to write large structured documents to
+#     local files. RovoChat cannot write local files (its outputs route through
+#     the response stream only). For ~5-20KB synthesized docs we want the
+#     filesystem-write path.
+#
+# Why no review/fix loop (unlike task topology)?
+#   Single-pass research → synthesis is the deliberate design. The agg uses
+#   opus-4-6 (config_override below) for high-quality first-pass synthesis.
+#   Adding a review/fix loop would 2-3x the LLM cost without proportional
+#   quality gain for this fan-out-fan-in shape.
+
+# ---------------------------------------------------------------------------
+# HYPERPARAMETERS
+# ---------------------------------------------------------------------------
+# workspace_root: REQUIRED — injected by executor.execute() via session_context
+#                 (see allocate_tool_workspace("create_role") in executor.py).
+#                 The "???" sentinel makes standalone instantiate() fail loud
+#                 if the override is missing.
+# max_facets:     overridable via --max-facets CLI arg.
+# default_model:  applies to RovoChat workers + breakdown (NOT aggregator,
+#                 which has its own opus-4-6 config_override).
+_params:
+  workspace_root: ???
+  max_facets: 8
+  # Two roles → two defaults (mirrors task/breakdown-multiflow-plan.yaml's
+  # `default_inferencer`, but split because create_role's research and
+  # aggregation phases need different capabilities):
+  #   - research: Rovo knowledge-search grounded (Confluence/Jira/Atlas)
+  #   - aggregation: RovoDevCLI for filesystem write (RovoChat cannot
+  #     write local files; large synthesized docs would be lost)
+  # Overridable via CLI/server: --override _params.default_research_inferencer=XXX
+  default_research_inferencer: RovoChat
+  default_aggregation_inferencer: RovoDevCLI
+  default_model: opus[1m]
+  default_idle_timeout: 600
+  default_tool_use_idle_timeout: 5400
+
+_target_: BTA
+
+# =====================================================================
+# Shared cascades (auto-injected into all children via _-prefix convention)
+# =====================================================================
+_logger: auto
+_debug_mode: true  # enables verbose logging (CacheOpen, Async, RetryPrompt etc.)
+_model_name: ${_params.default_model}
+_idle_timeout_seconds: ${_params.default_idle_timeout}
+_tool_use_idle_timeout_seconds: ${_params.default_tool_use_idle_timeout}
+
+_template_manager:
+  _target_: TemplateManager
+  templates:
+    - ${oc.env:PROMPT_TEMPLATES_DIR,prompt_templates}
+    - ${modpath:agent_foundation.resources.prompt_templates}
+  active_template_type: main
+  predefined_variables: true
+  cross_root_variable_lookup: true   # Refactor 17: framework wrappers + consumer specialized variants
+  default_template_key: initial
+  enable_templated_feed: true
+
+# Workspace contract: declared here for consistency with task topologies.
+# The actual workspace is bound at runtime by _run_topology via session_context,
+# but declaring it makes standalone `instantiate(load_config(...))` work too.
+workspace:
+  _target_: InferencerWorkspace
+  root: ${_params.workspace_root}
+  # Enable canonical deliverable surfacing under outputs/final_deliverables/.
+  # Combined with `output_is_deliverable: true` on the aggregator (below),
+  # this auto-promotes the aggregator's role_document.md to the BTA's
+  # outputs/final_deliverables/role_document.md — replacing the prior
+  # --output-path copy-out workaround.
+  use_final_deliverables_folder: true
+
+# =====================================================================
+# Pipeline: inferencers
+# =====================================================================
+#
+# Why is `output_path` per-inferencer (not a `_output_path` cascade)?
+#   Each role produces a different deliverable filename:
+#     breakdown → breakdown_output.md
+#     workers   → facet.md
+#     aggregator → role_document.md
+#   A `_output_path` cascade would overwrite these. The aggregator-input fix
+#   (Fix A) correctly reads each worker's own `output_path`, so per-inferencer
+#   values are the right design here.
+
+# --- Breakdown ---
+# template_root_space: task_breakdown defaulted by BTA.SLOT_DEFAULTS.
+breakdown_inferencer:
+  _target_: ${_params.default_research_inferencer}
+  auto_continue: true
+  output_path: "breakdown_output.md"   # _finalize_output() writes <Response> content here
+                                        # → children/breakdown/outputs/breakdown_output.md
+  max_continuations: 5
+  template_variables:
+    task_preamble: create_role
+
+# --- Workers (homogeneous — single partial, all same type) ---
+worker_factory:
+  _target_: ${_params.default_research_inferencer}
+  auto_continue: true
+  max_continuations: 5
+  template_root_space: deep_research
+  output_path: "facet.md"
+  response_post_processor: extract_delimited
+  template_variables:
+    task_preamble: create_role
+
+# --- Aggregator ---
+# Use RovoDevCLI (not RovoChat) for aggregation:
+# - RovoDevCLI can write large documents to local files (via --output-file)
+# - Returns clean file content as output (not just streaming text)
+# - RovoChat cannot write local files, so the synthesized document was
+#   being lost (agent said "written to file" but it never actually was)
+#
+# Note: config_override below overrides the _model_name cascade.
+# RovoDevCLI applies config_override AFTER attrs initialization,
+# so it has higher precedence than the cascaded _model_name value.
+aggregator_inferencer:
+  # task_preamble + task_response_format = aggregation defaulted by BTA.SLOT_DEFAULTS;
+  # task_instructions: create_role overrides the default per-key (the
+  # create_role-specific instructions matter more than generic aggregation here).
+  _target_: ${_params.default_aggregation_inferencer}
+  # NOTE: cleanup 2026-05-18 — removed 3 redundant/stale fields:
+  #   - yolo: true       → redundant; RovoDevCLI default is already True
+  #   - debug_mode: true → redundant; covered by top-level _debug_mode cascade (line 65)
+  #   - config_override: '{"agent": {"modelId": "anthropic:claude-opus-4-6"}}'
+  #                      → STALE pin; RovoDevCLI default has moved to opus-4-7
+  # All three values are now sourced from framework defaults / topology cascade,
+  # eliminating drift and letting future framework upgrades propagate naturally.
+  template_root_space: plan
+  output_path: "role_document.md"
+  # 2026-05-18 surfacing fix: mark aggregator's output as a deliverable.
+  # Combined with BTA's `use_final_deliverables_folder: true` below, this
+  # auto-promotes `children/aggregator/outputs/role_document.md` →
+  # `outputs/final_deliverables/role_document.md` (the canonical deliverable).
+  output_is_deliverable: true
+  response_post_processor: extract_delimited
+  template_variables:
+    task_instructions: create_role
+
+# =====================================================================
+# Pipeline: settings
+# =====================================================================
+breakdown_format: json_subtasks
+worker_query_fields:
+  - description
+  - todos
+max_breakdown: ${_params.max_facets}
+# NOTE: cleanup 2026-05-18 — removed `debug_mode: true` here;
+# redundant with top-level `_debug_mode: true` cascade (line 64) which
+# already injects debug_mode=true into BTA itself (Debuggable subclass).
+
+# =====================================================================
+# Surfacing (2026-05-18): leverage final_deliverables/ promotion
+# =====================================================================
+# `use_final_deliverables_folder: true` opts BTA into the canonical
+# deliverables-folder convention. When set, BTA's `_finalize_output`
+# collects any child whose `output_is_deliverable=True` (here: the
+# aggregator at line 152) and promotes those outputs into
+# `outputs/final_deliverables/`.
+#
+# The 37 KB canonical role document therefore lives at:
+#   outputs/final_deliverables/role_document.md      ← the real doc
+#
+# Meanwhile BTA's own `<Response>` (a ~2-3 KB summary blurb) is written
+# to its declared `output_path` below. We name it `run_summary.md` to
+# clearly distinguish it from the canonical deliverable (avoids the
+# previous "two files both called role_document.md, one is summary
+# text, one is the real doc" confusion).
+output_path: "run_summary.md"

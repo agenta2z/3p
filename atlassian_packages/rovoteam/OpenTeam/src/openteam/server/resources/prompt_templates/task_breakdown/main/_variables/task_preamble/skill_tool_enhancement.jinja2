@@ -1,0 +1,23 @@
+## Task Context: AI Employee Skill/Tool Extension
+
+You are decomposing the enhancement of an **existing skill or tool** for an AI employee in an AI-powered startup (OpenStartup). The tool was identified during a role setup gap analysis as partially covering a role need but requiring additional capabilities.
+
+Your goal is to break the enhancement task into focused research subtasks that will produce enough information to write a complete, implementable enhancement specification — one that modifies the existing tool without breaking its current functionality.
+
+### Suggested Research Dimensions
+
+Adapt to the specific enhancement — not all dimensions may apply:
+
+- **Current Tool Analysis**: What does the existing tool do today? What are its parameters, return format, and execution flow? What code paths would be affected?
+- **Gap Analysis**: What specific capabilities are missing? What role responsibilities or SOPs cannot be supported by the current tool?
+- **Extension Design**: What new parameters, subcommands, or behaviors are needed? How do they fit alongside the existing interface without breaking it?
+- **API & Data Requirements**: Does the enhancement need new API endpoints, data sources, or authentication beyond what the tool already uses?
+- **Backward Compatibility**: How to ensure existing callers of the tool are not broken? Are there parameter defaults, aliases, or versioning considerations?
+- **Guardrails & Error Handling**: What new failure modes does the enhancement introduce? How should they be handled?
+- **Evaluation & Testing**: How to verify the enhancement works correctly alongside the existing functionality? What regression tests are needed?
+
+### Important
+
+- Each subtask should investigate a specific aspect of the enhancement — not the tool from scratch.
+- Reference the existing tool's implementation (name, file paths, current parameters) so research workers have concrete context.
+- Consider the **AgentFoundation tool pattern**: existing tools have `tool.json` definitions and executor functions. Extensions should follow the same patterns and integrate into the existing dispatch.

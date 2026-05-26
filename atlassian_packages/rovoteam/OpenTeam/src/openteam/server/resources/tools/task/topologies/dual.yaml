@@ -1,0 +1,15 @@
+# Dual consensus loop (proposer + reviewer ClaudeCodeCli, iterate to consensus). Mirrors RankEvolve's literal DualInferencer.
+_target_: Dual
+base_inferencer:
+  _target_: ClaudeCodeCLI
+  model_name: opus[1m]
+  permission_mode: bypassPermissions
+  idle_timeout_seconds: 300
+review_inferencer:
+  _target_: ClaudeCodeCLI
+  model_name: opus[1m]
+  permission_mode: bypassPermissions
+  idle_timeout_seconds: 300
+consensus_config:
+  _target_: ConsensusConfig
+  max_iterations: 2

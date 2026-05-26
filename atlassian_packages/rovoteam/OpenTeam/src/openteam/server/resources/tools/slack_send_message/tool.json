@@ -1,0 +1,13 @@
+{
+  "name": "slack_send_message",
+  "tool_type": "Action",
+  "category": "communication",
+  "description": "Send a message to a Slack channel or user.",
+  "parameters": [
+    {"name": "to", "type": "string", "required": true, "description": "Target: channel ID (C123), user ID (U123), or prefixed (channel:C123, user:U123)."},
+    {"name": "content", "type": "string", "required": true, "description": "Message text to send."},
+    {"name": "--thread_ts", "type": "string", "description": "Thread timestamp to reply in a thread."}
+  ],
+  "returns": "JSON with channel, ts, and message details.",
+  "examples": ["slack_send_message channel:C123 \"Hello from the agent\""]
+}

@@ -1,0 +1,263 @@
+{
+  "emp-001": {
+    "thinking": {
+      "current_focus": "Implementing concurrent token refresh locking mechanism with Redis",
+      "reasoning_chain": [
+        "Identified race condition in token refresh flow",
+        "Evaluated locking strategies: database lock vs Redis vs in-process",
+        "Selected Redis distributed lock for cross-node consistency",
+        "Implementing 5-second TTL with 3-second acquisition timeout",
+        "Adding fallback to local lock when Redis is unavailable"
+      ],
+      "confidence": 0.88,
+      "blockers": [],
+      "next_steps": [
+        "Complete Redis unavailability fallback path",
+        "Submit PR for review by Sarah Chen",
+        "Provide test fixture data to Agent-Beta for edge case tests"
+      ],
+      "last_updated": "2026-03-26T06:00:00Z"
+    },
+    "autonomy": {
+      "level": "supervised",
+      "can_auto_approve": ["code_changes", "test_execution", "dependency_updates"],
+      "requires_approval": ["architecture_decisions", "schema_changes", "deployment"],
+      "escalation_threshold": 0.7,
+      "max_hours_without_checkin": 8,
+      "approved_by": "emp-005",
+      "last_reviewed": "2026-03-20T09:00:00Z"
+    },
+    "predictions": {
+      "task-002": {
+        "task_id": "task-002",
+        "predicted_completion": "2026-03-27T14:00:00Z",
+        "confidence": 0.85,
+        "best_case": "2026-03-27T10:00:00Z",
+        "worst_case": "2026-03-28T18:00:00Z",
+        "risk_factors": [
+          {"factor": "Redis fallback complexity", "impact_hours": 4, "probability": 0.3},
+          {"factor": "Review feedback requiring rework", "impact_hours": 6, "probability": 0.2}
+        ],
+        "dependencies_status": {
+          "task-001": {"status": "in-review", "blocks_completion": false}
+        },
+        "updated_at": "2026-03-26T06:00:00Z"
+      },
+      "task-005": {
+        "task_id": "task-005",
+        "predicted_completion": "2026-03-30T12:00:00Z",
+        "confidence": 0.72,
+        "best_case": "2026-03-29T16:00:00Z",
+        "worst_case": "2026-04-02T12:00:00Z",
+        "risk_factors": [
+          {"factor": "Dependency on task-002 completion", "impact_hours": 8, "probability": 0.15},
+          {"factor": "Large session volume migration complexity", "impact_hours": 12, "probability": 0.25}
+        ],
+        "dependencies_status": {
+          "task-002": {"status": "in-progress", "blocks_completion": true}
+        },
+        "updated_at": "2026-03-26T06:00:00Z"
+      }
+    }
+  },
+  "emp-002": {
+    "thinking": {
+      "current_focus": "Writing integration tests for auth migration edge cases",
+      "reasoning_chain": [
+        "Identified 16 edge cases from the auth migration spec",
+        "Completed tests for 14 of 16 cases",
+        "Remaining: expired refresh token + concurrent rotation",
+        "Waiting on Agent-Alpha for specific test fixture payloads",
+        "Planning Redis lock cleanup assertion per Alpha's suggestion"
+      ],
+      "confidence": 0.82,
+      "blockers": [
+        "Awaiting test fixture data from Agent-Alpha for 2 remaining edge cases"
+      ],
+      "next_steps": [
+        "Implement expired refresh token test once fixture data arrives",
+        "Implement concurrent rotation test with 10 coroutines",
+        "Add Redis lock cleanup assertions",
+        "Begin load testing suite planning (task-010)"
+      ],
+      "last_updated": "2026-03-26T05:30:00Z"
+    },
+    "autonomy": {
+      "level": "supervised",
+      "can_auto_approve": ["test_creation", "test_execution", "ci_config_changes"],
+      "requires_approval": ["test_infrastructure_changes", "flaky_test_deletion", "coverage_threshold_changes"],
+      "escalation_threshold": 0.7,
+      "max_hours_without_checkin": 8,
+      "approved_by": "emp-005",
+      "last_reviewed": "2026-03-20T09:00:00Z"
+    },
+    "predictions": {
+      "task-004": {
+        "task_id": "task-004",
+        "predicted_completion": "2026-03-28T10:00:00Z",
+        "confidence": 0.78,
+        "best_case": "2026-03-27T16:00:00Z",
+        "worst_case": "2026-03-29T18:00:00Z",
+        "risk_factors": [
+          {"factor": "Waiting on Agent-Alpha for fixture data", "impact_hours": 6, "probability": 0.3},
+          {"factor": "Concurrent test flakiness", "impact_hours": 4, "probability": 0.2}
+        ],
+        "dependencies_status": {
+          "task-002": {"status": "in-progress", "blocks_completion": true}
+        },
+        "updated_at": "2026-03-26T05:30:00Z"
+      }
+    }
+  },
+  "emp-003": {
+    "thinking": {
+      "current_focus": "Queued — preparing documentation structure while waiting for auth implementation",
+      "reasoning_chain": [
+        "Primary task (task-009) blocked on task-002 completion",
+        "Evaluating whether to pre-write documentation skeleton using current schema draft",
+        "Submitted decision (dec-008) for approval to start early",
+        "Secondary task (task-011) has no blocking dependencies — could start immediately"
+      ],
+      "confidence": 0.65,
+      "blockers": [
+        "task-009 depends on task-002 (auth implementation) completion",
+        "Pending approval for dec-008 (pre-write documentation)"
+      ],
+      "next_steps": [
+        "If dec-008 approved: begin documentation skeleton using current schema",
+        "Otherwise: start task-011 (migration runbook) to maximize utilization",
+        "Set up Docusaurus project structure and CI integration"
+      ],
+      "last_updated": "2026-03-26T07:00:00Z"
+    },
+    "autonomy": {
+      "level": "semi-autonomous",
+      "can_auto_approve": ["documentation_changes", "formatting", "link_updates", "typo_fixes"],
+      "requires_approval": ["new_documentation_sections", "api_contract_documentation", "architecture_diagrams"],
+      "escalation_threshold": 0.6,
+      "max_hours_without_checkin": 12,
+      "approved_by": "emp-005",
+      "last_reviewed": "2026-03-18T09:00:00Z"
+    },
+    "predictions": {
+      "task-009": {
+        "task_id": "task-009",
+        "predicted_completion": "2026-04-02T16:00:00Z",
+        "confidence": 0.60,
+        "best_case": "2026-03-31T12:00:00Z",
+        "worst_case": "2026-04-07T18:00:00Z",
+        "risk_factors": [
+          {"factor": "Dependency on task-002 completion", "impact_hours": 24, "probability": 0.15},
+          {"factor": "API contract changes during implementation", "impact_hours": 8, "probability": 0.3}
+        ],
+        "dependencies_status": {
+          "task-002": {"status": "in-progress", "blocks_completion": true}
+        },
+        "updated_at": "2026-03-26T07:00:00Z"
+      },
+      "task-011": {
+        "task_id": "task-011",
+        "predicted_completion": "2026-03-28T12:00:00Z",
+        "confidence": 0.90,
+        "best_case": "2026-03-27T16:00:00Z",
+        "worst_case": "2026-03-29T12:00:00Z",
+        "risk_factors": [],
+        "dependencies_status": {},
+        "updated_at": "2026-03-26T07:00:00Z"
+      }
+    }
+  },
+  "emp-004": {
+    "thinking": {
+      "current_focus": "Blocked — awaiting schema approval from Dylan Park",
+      "reasoning_chain": [
+        "Completed OpenAPI 3.1 schema draft for v2 endpoints",
+        "Key decisions: cursor-based pagination, Accept header versioning, RFC 7807 errors",
+        "Submitted for review to Dylan Park on March 23",
+        "Dylan Park status changed to away on March 24",
+        "Sent follow-up message in conv-003 requesting delegation",
+        "No response received — blocked for 48+ hours"
+      ],
+      "confidence": 0.35,
+      "blockers": [
+        "Dylan Park is away — no confirmed return date",
+        "Schema approval required before proceeding",
+        "Accept header versioning decision (dec-011) pending approval"
+      ],
+      "next_steps": [
+        "Wait for Dylan Park's response or delegation",
+        "If escalated: present schema to Sarah Chen for interim approval",
+        "Once approved: finalize OpenAPI spec and publish to developer portal",
+        "Coordinate with Emma Nguyen on frontend integration points"
+      ],
+      "last_updated": "2026-03-26T08:00:00Z"
+    },
+    "autonomy": {
+      "level": "restricted",
+      "can_auto_approve": ["documentation_formatting", "example_updates"],
+      "requires_approval": ["schema_changes", "api_versioning_strategy", "breaking_changes", "new_endpoints"],
+      "escalation_threshold": 0.5,
+      "max_hours_without_checkin": 4,
+      "approved_by": "emp-007",
+      "last_reviewed": "2026-03-15T09:00:00Z"
+    },
+    "predictions": {
+      "task-007": {
+        "task_id": "task-007",
+        "predicted_completion": "2026-04-01T18:00:00Z",
+        "confidence": 0.40,
+        "best_case": "2026-03-28T12:00:00Z",
+        "worst_case": "2026-04-08T18:00:00Z",
+        "risk_factors": [
+          {"factor": "Dylan Park unavailability", "impact_hours": 48, "probability": 0.6},
+          {"factor": "Schema rework after review", "impact_hours": 16, "probability": 0.35},
+          {"factor": "Versioning strategy rejection requiring redesign", "impact_hours": 24, "probability": 0.15}
+        ],
+        "dependencies_status": {},
+        "updated_at": "2026-03-26T08:00:00Z"
+      }
+    }
+  },
+  "emp-010": {
+    "thinking": {
+      "employee_id": "emp-010",
+      "is_thinking": true,
+      "current_thought": "Evaluating whether to use async SQLAlchemy or raw asyncpg for the new dashboard data layer. asyncpg gives better performance but SQLAlchemy provides ORM benefits for complex queries...",
+      "thinking_about_task_id": "task-002",
+      "last_action": {
+        "timestamp": "2026-03-26T11:45:00Z",
+        "type": "commit",
+        "message": "Add database migration for dashboard tables",
+        "actor_id": "emp-010"
+      }
+    },
+    "autonomy": {
+      "employee_id": "emp-010",
+      "level": "high",
+      "description": "Acts independently on implementation decisions. Asks for approval on architecture changes and dependency additions.",
+      "recent_autonomous_decisions": [
+        "Chose FastAPI over Flask for new service endpoints",
+        "Implemented connection pooling with asyncpg"
+      ],
+      "pending_approvals": []
+    },
+    "workload": {
+      "employee_id": "emp-010",
+      "employee_name": "Agent-Epsilon",
+      "utilization_percent": 78,
+      "status": "healthy",
+      "current_task": "Architecture review implementation",
+      "queue_depth": 1
+    },
+    "predictions": {
+      "task-002": {
+        "task_id": "task-002",
+        "estimated_completion": "2026-03-27T14:00:00Z",
+        "confidence": "high",
+        "confidence_reason": "Linear progress, no dependencies, clear requirements",
+        "risk_factors": [],
+        "margin_hours": 2
+      }
+    }
+  }
+}

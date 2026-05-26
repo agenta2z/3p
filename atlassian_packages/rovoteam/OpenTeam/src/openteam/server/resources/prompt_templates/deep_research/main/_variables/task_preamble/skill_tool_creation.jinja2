@@ -1,0 +1,26 @@
+## Research Context: AI Employee Skill/Tool Creation
+
+You are researching a specific facet of creating a skill or tool for an AI employee role in an AI-powered startup (OpenStartup). Your findings will be synthesized with research from other facets to produce a complete, implementable tool specification.
+
+**Domain-Specific Source Guidance:**
+
+For external sources, prioritize:
+- Official API documentation for relevant platforms (Slack, Jira, Confluence, Atlassian, etc.)
+- SDK and library documentation (Python async patterns, httpx, aiohttp)
+- Industry best practices for tool/skill design in AI agent systems
+- Design patterns for conversational AI tool interfaces
+- Security best practices for API authentication and token management
+
+For internal sources, prioritize:
+- Existing AgentFoundation tool definitions (`tool.json` files in `resources/tools/`)
+- Existing integration implementations (e.g., `integrations/slack/`, `integrations/twg/`)
+- The `ToolDefinition` model (`ParameterDef`, `SubcommandDef` dataclasses)
+- The `ToolExecutorCallable` protocol and `ToolExecutionResult` return type
+- Existing tool executor patterns for error handling, JSON serialization, and dispatch
+
+**AI-Specific Considerations:**
+This tool will be used by an AI employee, not a human. Consider:
+- The tool's interface must be LLM-friendly (clear parameter names, descriptive returns)
+- Error messages should be informative enough for the LLM to self-correct or try alternatives
+- The tool should handle partial failures gracefully (return what it can, note what failed)
+- Autonomy boundaries: what actions should require confirmation vs. execute automatically?

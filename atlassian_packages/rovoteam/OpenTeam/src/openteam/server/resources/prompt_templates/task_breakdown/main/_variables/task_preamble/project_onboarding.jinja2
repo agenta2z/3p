@@ -1,0 +1,68 @@
+## Task Context: AI Employee Project Onboarding
+
+You are onboarding an AI employee to a project: {{ project_name }}. The project details and description can be found at {{ project_doc_path }}.
+
+{% if role_context is defined and role_context %}
+### AI Employee Role Context (Pre-Onboarding Artifacts)
+{{ role_context }}
+
+The AI employee already has role-level capabilities set up. Your goal is to identify **project-specific** skills and tools needed beyond what the role already provides.
+{% if role_setup_path is defined and role_setup_path %}
+Scan the role setup artifacts directory at `{{ role_setup_path }}` to understand the existing skills and tools in detail — read their SKILL.md and tool.json files to understand current capabilities before proposing new ones.
+{% endif %}
+{% endif %}
+
+Your goal is to identify all required skills and tools the AI employee needs to effectively contribute to this project, and break down the creation of any missing skills/tools into focused subtasks.
+
+Carefully analyze the following aspects of the project and achieve the above goal.
+- **Codebase and architecture** — what tools are needed to navigate, understand, and work with the project's codebase, repositories, and technical architecture?
+- **Development workflow** — what CI/CD pipelines, branching strategies, code review processes, and deployment procedures does the project use?
+- **Project management** — what tracking, sprint planning, reporting, and backlog management tools does the project rely on?
+- **Communication and collaboration** — what channels, meetings, documentation systems, and stakeholder interaction patterns does the project use?
+- **Domain knowledge** — what domain-specific knowledge, frameworks, standards, or business rules does the project require?
+- **Testing and quality** — what testing frameworks, linting rules, quality gates, and monitoring tools does the project enforce?
+
+{% if artifacts_path is defined and artifacts_path %}
+### Additional Project Artifacts
+Scan the directory at `{{ artifacts_path }}` for additional project context. This may contain READMEs, architecture decision records, team norms, onboarding guides, or other relevant documents.
+{% endif %}
+
+### Available Tools/Skills
+{{ available_tools_skills }}
+
+### Reasoning Process
+
+1. **Compare** each needed capability against the **Available Tools/Skills** list.
+2. **Decide**: If an existing tool/skill fully or partially covers the need, do NOT create a new one — reuse what exists. Only create new skills, tools, or knowledge blocks when no existing capability covers the need.
+3. **Group creation subtasks** by platform or domain, with judgment on granularity:
+   - It is OK for one subtask to produce **multiple related deliverables** (skills, tools, and/or knowledge blocks) from the same domain, as long as they are cohesive.
+   - Do NOT split too finely within the same functional area — group related items under one subtask.
+   - Do NOT merge unrelated capabilities just because they happen to share a platform — use clear **responsibility boundaries** as the grouping criterion.
+
+### Subtask Scope Discipline
+
+Each subtask MUST have a NON-OVERLAPPING scope. Two subtasks should never both claim responsibility for the same skill, tool, or knowledge block. Overlap creates duplicate deliverables that waste worker effort and produce conflicting versions.
+
+Each subtask MUST have a clear, specific scope statement (e.g., "CI/CD pipeline monitoring via Bamboo + GitHub Actions") that the worker can use to decide what's in scope vs out of scope. Avoid vague or general subtasks like "engineering tooling" or "general automation" — they encourage workers to produce everything.
+
+### Subtask Format
+
+All subtasks use `"args": {"task_preamble": "skill_tool_creation"}` and can produce any combination of:
+- **New tools** — executable capabilities (tool.json + executor) that don't exist yet
+- **New skills** — domain-specific workflow guidance (SKILL.md) on how to use existing tools for project-specific workflows
+- **New knowledge blocks** — reference documents (.md) capturing domain knowledge, conventions, or architectural context that doesn't fit into a skill or tool
+
+The description MUST:
+- **List each deliverable** (skill, tool, or knowledge block) to be created, with a brief purpose for each.
+- For each new **tool**: state why existing tools are insufficient and what new executable capability is needed.
+- For each new **skill**: state which existing tools it can leverage. Only propose a new tool if no existing tool covers the needed operations.
+- For each new **knowledge block**: state what domain knowledge or context it captures and why it doesn't belong in a skill or tool.
+- Always include a research requirement to discover and evaluate available platforms, APIs, and CLIs that could serve the need.
+- Reference the specific parts of the project document that drive each deliverable.
+
+### IMPORTANT
+
+- Do NOT reinvent the wheel — if an existing tool/skill already covers a need, do not create a new one. Only create what is genuinely missing.
+- Prioritize subtasks based on their project impact: CRITICAL if the deliverable is for the project's core workflows, HIGH for important supporting processes, MEDIUM for auxiliary activities, LOW for nice-to-have capabilities.
+- Tool and skill names and high-level descriptions alone may not reveal their full capabilities. Take a careful deep dive into artifacts of related existing skills/tools (e.g., SKILL.md, tool.json, code) to understand their functionality and limitations before creating subtasks.
+- Do NOT propose building new or enhancing software systems, databases, or framework infrastructure. They are not tool/skill level of concern. Note those in the `gaps` field instead.

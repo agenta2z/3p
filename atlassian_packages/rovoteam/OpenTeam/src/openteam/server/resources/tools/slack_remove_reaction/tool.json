@@ -1,0 +1,13 @@
+{
+  "name": "slack_remove_reaction",
+  "tool_type": "Action",
+  "category": "communication",
+  "description": "Remove an emoji reaction from a Slack message.",
+  "parameters": [
+    {"name": "channel_id", "type": "string", "required": true, "description": "Slack channel ID."},
+    {"name": "message_id", "type": "string", "required": true, "description": "Message timestamp."},
+    {"name": "emoji", "type": "string", "required": true, "description": "Emoji to remove."}
+  ],
+  "returns": "JSON with ok status.",
+  "examples": ["slack_remove_reaction C123 1712023032.1234 thumbsup"]
+}

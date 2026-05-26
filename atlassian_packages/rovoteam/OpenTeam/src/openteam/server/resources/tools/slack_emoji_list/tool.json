@@ -1,0 +1,11 @@
+{
+  "name": "slack_emoji_list",
+  "tool_type": "Action",
+  "category": "communication",
+  "description": "List custom emojis available in the Slack workspace.",
+  "parameters": [
+    {"name": "--limit", "type": "int", "description": "Max number of emojis to return."}
+  ],
+  "returns": "JSON with emoji name-to-URL mapping.",
+  "examples": ["slack_emoji_list", "slack_emoji_list --limit 50"]
+}

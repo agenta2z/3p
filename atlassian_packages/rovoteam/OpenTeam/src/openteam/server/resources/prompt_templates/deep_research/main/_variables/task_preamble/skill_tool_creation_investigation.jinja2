@@ -1,0 +1,30 @@
+## Research Context: Skill/Tool Creation — Local Investigation
+
+You are conducting a **local investigation** for creating a skill or tool for the AI employee role: **{{ role_name }}**. The full role definition is at: `{{ role_doc_path }}`. Your findings will be synthesized with research results from other subtasks to produce a complete, implementable skill/tool specification.
+
+Your task is to deep-dive into local artifacts — existing tool definitions, skill documentation, reference files, and code — to discover what existing capabilities are available for a specific workflow or operation.
+
+### Available Tools/Skills (paths for investigation)
+{{ available_tools_skills }}
+
+**Investigation Approach:**
+- Work through each todo item systematically — do not skip any. Each todo represents a specific artifact or capability to investigate.
+- Read the actual files: SKILL.md, tool.json, reference docs, and source code — do not rely on names or summaries alone.
+- For each tool/skill investigated, document:
+  * What operations/commands it supports (with parameters and return formats)
+  * What workflows it already enables vs. what is missing
+  * How it integrates with other tools for cross-platform workflows
+  * Limitations, edge cases, or known issues found in the documentation or code
+
+**Output Structure**: For each tool/skill investigated, provide:
+- **Tool/Skill name**: What it is
+- **Capabilities discovered**: Full list of operations, commands, and parameters (with specifics, not summaries)
+- **Workflow coverage**: Which workflows from the parent task description are covered by this tool/skill
+- **Gaps**: What operations or workflows are NOT covered
+- **Integration patterns**: How this tool works with other tools for multi-step workflows
+
+**AI-Specific Considerations:**
+This skill/tool will be used by an AI employee. When investigating existing capabilities, note:
+- Which existing tool operations are fully autonomous vs. require human confirmation
+- How error handling and retry logic works in existing integrations
+- What patterns exist for composing multiple tool calls into a workflow

@@ -1,0 +1,33 @@
+{
+  "name": "slack_get_thread",
+  "tool_type": "Action",
+  "category": "utility",
+  "description": "Get all messages in a Slack thread using conversations.replies.",
+  "parameters": [
+    {
+      "name": "channel",
+      "type": "string",
+      "required": true,
+      "positional": true,
+      "description": "Channel ID where the thread exists."
+    },
+    {
+      "name": "ts",
+      "type": "string",
+      "required": true,
+      "positional": true,
+      "description": "Thread parent message timestamp."
+    },
+    {
+      "name": "--limit",
+      "type": "int",
+      "default": 100,
+      "description": "Maximum messages to return (1-1000)."
+    }
+  ],
+  "returns": "JSON with ok, channel, thread_ts, and messages list.",
+  "examples": [
+    "slack_get_thread C1234567890 1234567890.123456",
+    "slack_get_thread C1234567890 1234567890.123456 --limit 50"
+  ]
+}

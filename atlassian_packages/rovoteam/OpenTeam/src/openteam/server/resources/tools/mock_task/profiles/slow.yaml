@@ -1,0 +1,24 @@
+# Slow profile — 60s total, 2s per node transition (test sustained streaming)
+_target_: BTA
+name: null
+
+breakdown_inferencer:
+  _target_: MockBreakdownInferencer
+  delay_s: 4.0
+  subtasks:
+    - {description: "Deep research task A"}
+    - {description: "Deep research task B"}
+    - {description: "Deep research task C"}
+
+worker_factory:
+  __default__:
+    _target_: MockWorker
+    duration_s: 12.0
+
+aggregator_inferencer:
+  _target_: MockAggregator
+  delay_s: 8.0
+
+breakdown_format: json_subtasks
+max_breakdown: 5
+debug_mode: false

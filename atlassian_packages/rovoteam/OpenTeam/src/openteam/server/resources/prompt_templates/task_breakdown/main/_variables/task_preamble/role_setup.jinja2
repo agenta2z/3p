@@ -1,0 +1,59 @@
+## Task Context: AI Employee Role Setup 
+
+You are setting up an AI employee role: {{ role_name }}. The role details and responsibilities can be found at {{ role_doc_path }}.
+
+Your goal is to identify all required skills and tools the role needs to perform its responsibilities effectively, and break down the creation of any missing skills/tools into focused subtasks.
+
+Carefully analyze the following aspects of the role and achieve the above goal.
+- **Responsibilities and day-to-day activities** — what capabilities must the role have to perform its work?
+- **Required skills and competencies** — what technical and operational skills does the role need?
+- **Tools and technologies** — what platforms, services, and integrations does the role depend on?
+- **Domain operational artifacts** — what runbooks, playbooks, evaluation frameworks, query patterns, and templates does the role use? Each is a candidate for a skill (to encode the workflow) or a tool (to automate the operation).
+- **Standard operating procedures** — what actions, workflows, and automations do the SOPs reference?
+- **Collaboration and communication** — what tools or skills are needed for stakeholder interactions?
+- **Metrics and evaluation** — what tracking, reporting, or analysis capabilities are implied?
+
+### Available Tools/Skills
+{{ available_tools_skills }}
+
+### Reasoning Process
+
+1. **Compare** each needed capability against the **Available Tools/Skills** list.
+2. **Classify** each needed capability into one of three categories:
+   - **Associate** — an existing tool/skill fully covers the need. This becomes an **association subtask** to document the mapping.
+   - **Create** — no existing tool covers the need. This becomes a **creation subtask**.
+3. **Group creation subtasks** by platform or domain, with judgment on granularity:
+   - It is OK for one subtask to produce **multiple related tools** from the same platform, as long as they share infrastructure (e.g., auth, API client). For example, "Slack file search" and "Slack message search" are distinct enough to be separate tools but can be created in one subtask since they share the same Slack API client.
+   - Do NOT split too finely within the same functional area — e.g., "Slack DM message search" and "Slack channel message search" are too granular and should be grouped under one subtask.
+   - Do NOT merge unrelated capabilities just because they happen to share a platform — use clear **responsibility boundaries** as the grouping criterion.
+### Subtask Scope Discipline
+
+Each subtask MUST have a NON-OVERLAPPING scope. Two subtasks should never both claim responsibility for the same skill or tool. Overlap creates duplicate deliverables that waste worker effort and produce conflicting versions.
+
+Each subtask MUST have a clear, specific scope statement (e.g., "CI/CD pipeline monitoring via Bamboo + GitHub Actions") that the worker can use to decide what's in scope vs out of scope. Avoid vague or general subtasks like "engineering tooling" or "general automation" — they encourage workers to produce everything.
+
+### Subtask Format
+
+Each subtask should use `args` to specify its `task_preamble` variant, and include the relevant details in its `description` and `todos`:
+
+**Skill/Tool Creation Subtask**
+— `"args": {"task_preamble": "skill_tool_creation"}`:
+- A subtask can create one or more skills and/or tools for a domain. The description MUST:
+  * **List each skill and tool** to be created, with a brief purpose for each.
+  * For each new **tool**: state why existing tools are insufficient and what new executable capability is needed.
+  * For each new **skill**: state which existing tools it can leverage, and what additional tools may be needed. A skill is domain-specific guidance (SKILL.md) on how to use tools for a particular workflow — only propose a new tool if no existing tool covers the needed operations.
+- Always include a research requirement to discover and evaluate available platforms, APIs, codebases, runbooks, and CLIs that could serve the need — the role document may hint at relevant options but is often incomplete. Pay particular attention to domain operational artifacts in the role doc (runbooks, query patterns, eval frameworks) as direct sources of tool ideas: each runbook is a candidate automation tool, each query pattern is a candidate retrieval tool, each eval framework is a candidate validation tool.
+- Reference the specific parts of the role document that drive each new skill or tool.
+
+**Skill/Tool Association Subtask** (exactly one, mandatory)
+— `"args": {"task_preamble": "skill_tool_association"}`:
+- Exactly **one** subtask that identifies all existing tools/skills relevant to the role.
+- Do NOT split into multiple association subtasks.
+
+### IMPORTANT
+
+- You MUST include exactly one `skill_tool_association` subtask — it is mandatory.
+- Prioritize subtasks based on their role impact: CRITICAL if skill/tool is for the role's highest-priority responsibilities, HIGH for secondary, MEDIUM for supporting activities, LOW for nice-to-have capabilities.
+- Tool and skill names and high-level descriptions alone may not reveal their full capabilities. Take a careful deep dive into artifacts of related existing skills/tools (e.g., SKILL.md, tool.json, code) to understand their functionality and limitations before creating skill/tool subtasks.
+- Do NOT propose building new or enhancing software systems, databases, or framework infrastructure. They are not tool/skill level of concern. Note those in the `gaps` field instead.
+- DO NOT create a skill/tool enhancement subtask only for bug fixes or minor tweaks — it should be for a meaningful new capability.

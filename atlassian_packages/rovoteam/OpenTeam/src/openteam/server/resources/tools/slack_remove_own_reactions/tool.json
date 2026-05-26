@@ -1,0 +1,12 @@
+{
+  "name": "slack_remove_own_reactions",
+  "tool_type": "Action",
+  "category": "communication",
+  "description": "Remove all of the bot's own reactions from a Slack message.",
+  "parameters": [
+    {"name": "channel_id", "type": "string", "required": true, "description": "Slack channel ID."},
+    {"name": "message_id", "type": "string", "required": true, "description": "Message timestamp."}
+  ],
+  "returns": "JSON with list of removed emoji names.",
+  "examples": ["slack_remove_own_reactions C123 1712023032.1234"]
+}

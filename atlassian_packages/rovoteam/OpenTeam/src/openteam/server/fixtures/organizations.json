@@ -1,0 +1,26 @@
+[
+  {
+    "id": "org-001",
+    "name": "AI Lab Team",
+    "description": "AI research, model training, and ML experimentation",
+    "head_id": "emp-009",
+    "member_ids": ["emp-009", "emp-001", "emp-002", "emp-003", "emp-004", "emp-005", "emp-006", "emp-007", "emp-008", "emp-010"],
+    "parent_org_id": null
+  },
+  {
+    "id": "org-002",
+    "name": "AI Production Team",
+    "description": "Production AI agent operations, deployment, and monitoring",
+    "head_id": "emp-009",
+    "member_ids": ["emp-009", "emp-002", "emp-010", "emp-007"],
+    "parent_org_id": null
+  },
+  {
+    "id": "org-003",
+    "name": "Sales & Customer Service Team",
+    "description": "Customer-facing AI and human sales, support, and success",
+    "head_id": "emp-008",
+    "member_ids": ["emp-008", "emp-003", "emp-004"],
+    "parent_org_id": null
+  }
+]

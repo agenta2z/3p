@@ -1,0 +1,11 @@
+{
+  "name": "slack_list_pins",
+  "tool_type": "Action",
+  "category": "communication",
+  "description": "List pinned items in a Slack channel.",
+  "parameters": [
+    {"name": "channel_id", "type": "string", "required": true, "description": "Slack channel ID."}
+  ],
+  "returns": "JSON with list of pinned items.",
+  "examples": ["slack_list_pins C123"]
+}

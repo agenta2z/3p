@@ -1,0 +1,108 @@
+{
+  "emp-001": [
+    {
+      "id": "issue-001",
+      "employee_id": "emp-001",
+      "timestamp": "2026-03-24T09:00:00Z",
+      "title": "Token refresh race condition under load",
+      "description": "Concurrent refresh requests occasionally produce duplicate tokens",
+      "severity": "high",
+      "status": "resolved",
+      "resolution_method": "Implemented Redis distributed lock with 5s TTL",
+      "resolution_time_hours": 4.2,
+      "related_task_id": "task-002"
+    },
+    {
+      "id": "issue-002",
+      "employee_id": "emp-001",
+      "timestamp": "2026-03-25T11:00:00Z",
+      "title": "Expired refresh token not triggering re-auth",
+      "description": "When both access and refresh tokens expire, system loops instead of redirecting",
+      "severity": "medium",
+      "status": "resolved",
+      "resolution_method": "Added expired refresh token detection with redirect to /auth/login",
+      "resolution_time_hours": 2.0,
+      "related_task_id": "task-002"
+    }
+  ],
+  "emp-002": [
+    {
+      "id": "issue-003",
+      "employee_id": "emp-002",
+      "timestamp": "2026-03-23T14:00:00Z",
+      "title": "Flaky integration test in CI",
+      "description": "test_concurrent_token_refresh fails intermittently due to timing",
+      "severity": "medium",
+      "status": "resolved",
+      "resolution_method": "Added retry logic and increased async timeout to 10s",
+      "resolution_time_hours": 1.5,
+      "related_task_id": "task-004"
+    },
+    {
+      "id": "issue-004",
+      "employee_id": "emp-002",
+      "timestamp": "2026-03-26T05:00:00Z",
+      "title": "Missing test fixture for edge case #15",
+      "description": "Awaiting test data from AI-Alpha for expired refresh + concurrent rotation",
+      "severity": "low",
+      "status": "open",
+      "resolution_method": null,
+      "resolution_time_hours": null,
+      "related_task_id": "task-004"
+    }
+  ],
+  "emp-003": [
+    {
+      "id": "issue-005",
+      "employee_id": "emp-003",
+      "timestamp": "2026-03-22T10:00:00Z",
+      "title": "Documentation structure doesn't match API versioning",
+      "description": "Docusaurus nav assumes URL-based versioning but API uses Accept header",
+      "severity": "medium",
+      "status": "open",
+      "resolution_method": null,
+      "resolution_time_hours": null,
+      "related_task_id": "task-009"
+    }
+  ],
+  "emp-004": [
+    {
+      "id": "issue-006",
+      "employee_id": "emp-004",
+      "timestamp": "2026-03-23T09:00:00Z",
+      "title": "OpenAPI spec fails linting on nullable fields",
+      "description": "spectral lint reports 12 warnings on nullable field definitions",
+      "severity": "low",
+      "status": "resolved",
+      "resolution_method": "Migrated nullable fields to oneOf with null type per OpenAPI 3.1 spec",
+      "resolution_time_hours": 1.0,
+      "related_task_id": "task-007"
+    },
+    {
+      "id": "issue-007",
+      "employee_id": "emp-004",
+      "timestamp": "2026-03-24T08:00:00Z",
+      "title": "Blocked on schema approval \u2014 reviewer away",
+      "description": "Dylan Park marked as away, no delegation set up",
+      "severity": "high",
+      "status": "open",
+      "resolution_method": null,
+      "resolution_time_hours": null,
+      "related_task_id": "task-007"
+    }
+  ],
+  "emp-010": [
+    {
+      "id": "issue-008",
+      "employee_id": "emp-010",
+      "timestamp": "2026-03-25T10:00:00Z",
+      "title": "Dashboard query N+1 performance issue",
+      "description": "Employee list endpoint triggers N+1 queries for task resolution",
+      "severity": "medium",
+      "status": "resolved",
+      "resolution_method": "Added batch prefetch for task data in data_service",
+      "resolution_time_hours": 3.0,
+      "related_task_id": "task-014"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "slack_find_dm_channel",
+  "tool_type": "Action",
+  "category": "utility",
+  "description": "Find the direct-message channel ID for a Slack user.",
+  "parameters": [
+    {
+      "name": "user_id",
+      "type": "string",
+      "required": true,
+      "positional": true,
+      "description": "Slack user ID of the other person in the DM conversation."
+    }
+  ],
+  "returns": "JSON with ok, found (bool), user_id, channel object (if found), and total_channels_scanned.",
+  "examples": [
+    "slack_find_dm_channel U1234567890"
+  ]
+}

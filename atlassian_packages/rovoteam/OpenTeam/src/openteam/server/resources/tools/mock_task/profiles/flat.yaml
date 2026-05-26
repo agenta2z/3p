@@ -1,0 +1,33 @@
+# Flat profile — single-level BTA with 12 workers (no nesting)
+_target_: BTA
+name: null
+
+breakdown_inferencer:
+  _target_: MockBreakdownInferencer
+  delay_s: 1.0
+  subtasks:
+    - {description: "Research authentication patterns"}
+    - {description: "Investigate caching strategies"}
+    - {description: "Review logging frameworks"}
+    - {description: "Analyze metrics collection"}
+    - {description: "Study search indexing"}
+    - {description: "Evaluate message queues"}
+    - {description: "Compare config management"}
+    - {description: "Assess deployment options"}
+    - {description: "Review API gateway options"}
+    - {description: "Study rate limiting"}
+    - {description: "Investigate monitoring"}
+    - {description: "Analyze security controls"}
+
+worker_factory:
+  __default__:
+    _target_: MockWorker
+    duration_s: 2.0
+
+aggregator_inferencer:
+  _target_: MockAggregator
+  delay_s: 1.5
+
+breakdown_format: json_subtasks
+max_breakdown: 12
+debug_mode: false

@@ -1,0 +1,37 @@
+{
+  "name": "slack_get_channel_history",
+  "tool_type": "Action",
+  "category": "utility",
+  "description": "Get recent messages from a Slack channel or DM. Tries conversations.history first; on access errors, falls back to search.messages with in:#channel query (works enterprise-wide).",
+  "parameters": [
+    {
+      "name": "channel",
+      "type": "string",
+      "required": true,
+      "positional": true,
+      "description": "Slack channel or DM ID to fetch history for."
+    },
+    {
+      "name": "--channel_name",
+      "type": "string",
+      "description": "Optional Slack channel name to resolve before fetching history."
+    },
+    {
+      "name": "--limit",
+      "type": "int",
+      "default": 20,
+      "description": "Maximum messages to return (1-1000)."
+    },
+    {
+      "name": "--cursor",
+      "type": "string",
+      "description": "Pagination cursor from a previous result."
+    }
+  ],
+  "returns": "JSON with ok, channel, messages list, has_more, method (conversations.history or search.messages), and response_metadata.",
+  "examples": [
+    "slack_get_channel_history C1234567890",
+    "slack_get_channel_history C1234567890 --limit 50",
+    "slack_get_channel_history C1234567890 --channel_name general"
+  ]
+}

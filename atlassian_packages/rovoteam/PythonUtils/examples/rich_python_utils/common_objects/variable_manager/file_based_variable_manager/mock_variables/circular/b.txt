@@ -1,0 +1,1 @@
+B references {{circular_a}}

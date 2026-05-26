@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "openteam": {
+      "command": "openteam-mcp",
+      "args": ["run"],
+      "transport": "stdio",
+      "env": {
+        "OPENTEAM_LLM_BACKEND": "claude_cli",
+        "OPENTEAM_LLM_MODEL": "sonnet"
+      }
+    }
+  }
+}

@@ -1,0 +1,450 @@
+[
+  {
+    "id": "task-001",
+    "title": "Architecture review for auth migration",
+    "description": "Conduct a comprehensive architecture review of the OAuth2/OIDC migration plan. Validate token flow diagrams, identify edge cases, and approve the final implementation approach.",
+    "status": "in-review",
+    "priority": "high",
+    "project_id": "proj-001",
+    "assignee_ids": ["emp-005"],
+    "dependency_ids": [],
+    "progress_percent": 90,
+    "created_at": "2026-03-05T09:00:00Z",
+    "updated_at": "2026-03-25T17:00:00Z",
+    "due_date": "2026-03-28",
+    "estimated_hours": 10,
+    "tags": ["architecture", "review", "auth"],
+    "activity": [
+      {"timestamp": "2026-03-25T17:00:00Z", "type": "comment", "message": "Final review comments added. Waiting for Agent-Alpha to address two minor concerns.", "actor_id": "emp-005"},
+      {"timestamp": "2026-03-24T11:00:00Z", "type": "status_change", "message": "Status changed from in-progress to in-review", "actor_id": "emp-005"},
+      {"timestamp": "2026-03-20T09:30:00Z", "type": "assignment", "message": "Sarah Chen self-assigned this task", "actor_id": "emp-005"}
+    ]
+  },
+  {
+    "id": "task-002",
+    "title": "Implement OAuth2 token refresh logic",
+    "description": "Build the token refresh mechanism for OAuth2 flows. Handle refresh token rotation, expiry grace periods, and concurrent refresh race conditions.",
+    "status": "in-progress",
+    "priority": "high",
+    "project_id": "proj-001",
+    "assignee_ids": ["emp-001"],
+    "dependency_ids": ["task-001"],
+    "progress_percent": 75,
+    "created_at": "2026-03-10T09:00:00Z",
+    "updated_at": "2026-03-26T06:00:00Z",
+    "due_date": "2026-03-30",
+    "estimated_hours": 6,
+    "tags": ["backend", "auth", "oauth2"],
+    "activity": [
+      {"timestamp": "2026-03-26T06:00:00Z", "type": "progress", "message": "Implemented concurrent refresh token locking mechanism. 3 of 4 edge cases handled.", "actor_id": "emp-001"},
+      {"timestamp": "2026-03-25T14:00:00Z", "type": "comment", "message": "Discussing edge cases with Sarah in conv-001.", "actor_id": "emp-001"},
+      {"timestamp": "2026-03-22T10:00:00Z", "type": "status_change", "message": "Status changed from backlog to in-progress", "actor_id": "emp-001"}
+    ]
+  },
+  {
+    "id": "task-003",
+    "title": "Manual regression testing for auth flows",
+    "description": "Execute manual test cases covering all authentication flows: login, logout, password reset, MFA, and session timeout. Document any regressions found.",
+    "status": "in-progress",
+    "priority": "high",
+    "project_id": "proj-001",
+    "assignee_ids": ["emp-006"],
+    "dependency_ids": ["task-002"],
+    "progress_percent": 40,
+    "created_at": "2026-03-15T09:00:00Z",
+    "updated_at": "2026-03-25T16:00:00Z",
+    "due_date": "2026-04-02",
+    "estimated_hours": 6,
+    "tags": ["qa", "testing", "manual", "auth"],
+    "activity": [
+      {"timestamp": "2026-03-25T16:00:00Z", "type": "progress", "message": "Completed login and logout flows. Starting MFA test cases tomorrow.", "actor_id": "emp-006"},
+      {"timestamp": "2026-03-23T09:00:00Z", "type": "status_change", "message": "Status changed from backlog to in-progress", "actor_id": "emp-006"}
+    ]
+  },
+  {
+    "id": "task-004",
+    "title": "Write integration tests for auth migration",
+    "description": "Create comprehensive integration test suite covering OAuth2 token lifecycle, session migration, and backward compatibility. Target 90%+ coverage for auth module.",
+    "status": "in-progress",
+    "priority": "high",
+    "project_id": "proj-001",
+    "assignee_ids": ["emp-002"],
+    "dependency_ids": ["task-002"],
+    "progress_percent": 60,
+    "created_at": "2026-03-12T09:00:00Z",
+    "updated_at": "2026-03-26T05:30:00Z",
+    "due_date": "2026-04-01",
+    "estimated_hours": 4,
+    "tags": ["testing", "integration", "auth", "automation"],
+    "activity": [
+      {"timestamp": "2026-03-26T05:30:00Z", "type": "progress", "message": "14 of 16 edge cases now covered. Awaiting test data spec from Agent-Alpha for remaining 2.", "actor_id": "emp-002"},
+      {"timestamp": "2026-03-25T14:45:00Z", "type": "comment", "message": "Discussed test data requirements with Agent-Alpha in conv-002.", "actor_id": "emp-002"},
+      {"timestamp": "2026-03-20T09:00:00Z", "type": "status_change", "message": "Status changed from backlog to in-progress", "actor_id": "emp-002"}
+    ]
+  },
+  {
+    "id": "task-005",
+    "title": "Session migration script",
+    "description": "Build and validate the migration script that converts existing session-based tokens to OAuth2 tokens. Must handle millions of active sessions with zero downtime.",
+    "status": "backlog",
+    "priority": "medium",
+    "project_id": "proj-001",
+    "assignee_ids": ["emp-001"],
+    "dependency_ids": ["task-002"],
+    "progress_percent": 0,
+    "created_at": "2026-03-10T09:00:00Z",
+    "updated_at": "2026-03-10T09:00:00Z",
+    "due_date": "2026-04-08",
+    "estimated_hours": 3,
+    "tags": ["backend", "migration", "auth"],
+    "activity": [
+      {"timestamp": "2026-03-10T09:00:00Z", "type": "created", "message": "Task created and assigned to Agent-Alpha", "actor_id": "emp-005"}
+    ]
+  },
+  {
+    "id": "task-006",
+    "title": "Sprint retrospective preparation",
+    "description": "Prepare materials for the sprint 3 retrospective. Collect metrics, summarize AI agent performance, and draft discussion topics.",
+    "status": "backlog",
+    "priority": "medium",
+    "project_id": "proj-001",
+    "assignee_ids": ["emp-005"],
+    "dependency_ids": ["task-001"],
+    "progress_percent": 0,
+    "created_at": "2026-03-18T09:00:00Z",
+    "updated_at": "2026-03-18T09:00:00Z",
+    "due_date": "2026-04-05",
+    "estimated_hours": 4,
+    "tags": ["process", "retrospective"],
+    "activity": [
+      {"timestamp": "2026-03-18T09:00:00Z", "type": "created", "message": "Task created for end-of-sprint retrospective", "actor_id": "emp-005"}
+    ]
+  },
+  {
+    "id": "task-007",
+    "title": "Design OpenAPI 3.1 schema for v2 endpoints",
+    "description": "Create the complete OpenAPI 3.1 specification for all v2 API endpoints. Includes pagination schemas, error response models, and versioning headers.",
+    "status": "pending",
+    "priority": "high",
+    "project_id": "proj-002",
+    "assignee_ids": ["emp-004"],
+    "dependency_ids": [],
+    "progress_percent": 70,
+    "pending_reason": {
+      "type": "approval_required",
+      "icon": "\ud83d\udd10",
+      "summary": "Waiting for schema approval from Dylan Park",
+      "details": "Dylan Park (Backend Engineer) needs to approve the OpenAPI 3.1 schema design. He is currently marked as 'Away' with no confirmed return date.",
+      "pending_since": "2026-03-24T10:15:00Z",
+      "resolution": {
+        "prompt": "How would you like to resolve this?",
+        "options": [
+          {"id": "escalate", "label": "Escalate to Sarah Chen", "description": "Sarah has authority to approve the schema as interim reviewer", "action_type": "escalate", "requires_input": false},
+          {"id": "reassign", "label": "Reassign to another reviewer", "description": "Pick a different team member to review", "action_type": "reassign", "requires_input": true, "input_type": "select", "input_label": "Select reviewer", "input_options": ["Sarah Chen", "Marcus Rivera", "Paradin Srinivasan"]},
+          {"id": "override", "label": "Override — approve without review", "description": "Manager approves directly (requires justification)", "action_type": "override", "requires_input": true, "input_type": "text", "input_label": "Justification", "input_placeholder": "Explain why review can be skipped..."},
+          {"id": "dismiss", "label": "Keep waiting", "description": "No action needed right now", "action_type": "dismiss", "requires_input": false}
+        ]
+      }
+    },
+    "created_at": "2026-03-08T09:00:00Z",
+    "updated_at": "2026-03-24T10:15:00Z",
+    "due_date": "2026-04-05",
+    "estimated_hours": 8,
+    "tags": ["api", "openapi", "design", "schema"],
+    "activity": [
+      {"timestamp": "2026-03-24T10:15:00Z", "type": "status_change", "message": "Blocked: sent schema for approval to Dylan Park, who is now marked as away.", "actor_id": "emp-004"},
+      {"timestamp": "2026-03-23T16:00:00Z", "type": "comment", "message": "Schema draft complete. Requesting review from Dylan Park via conv-003.", "actor_id": "emp-004"},
+      {"timestamp": "2026-03-15T09:00:00Z", "type": "status_change", "message": "Status changed from backlog to in-progress", "actor_id": "emp-004"}
+    ]
+  },
+  {
+    "id": "task-008",
+    "title": "Build auth flow UI components",
+    "description": "Create React components for the new authentication flow: login form, MFA input, password reset wizard, and session management panel.",
+    "status": "in-progress",
+    "priority": "high",
+    "project_id": "proj-002",
+    "assignee_ids": ["emp-008"],
+    "dependency_ids": [],
+    "progress_percent": 55,
+    "created_at": "2026-03-12T09:00:00Z",
+    "updated_at": "2026-03-26T07:00:00Z",
+    "due_date": "2026-04-10",
+    "estimated_hours": 8,
+    "tags": ["frontend", "react", "ui", "auth"],
+    "activity": [
+      {"timestamp": "2026-03-26T07:00:00Z", "type": "progress", "message": "Login form and MFA input components complete. Starting password reset wizard.", "actor_id": "emp-008"},
+      {"timestamp": "2026-03-21T14:00:00Z", "type": "status_change", "message": "Status changed from backlog to in-progress", "actor_id": "emp-008"}
+    ]
+  },
+  {
+    "id": "task-009",
+    "title": "Update API documentation for auth endpoints",
+    "description": "Write comprehensive API documentation for all new OAuth2 endpoints. Include request/response examples, error codes, and migration guide for existing consumers.",
+    "status": "backlog",
+    "priority": "medium",
+    "project_id": "proj-001",
+    "assignee_ids": ["emp-003"],
+    "dependency_ids": ["task-002"],
+    "progress_percent": 0,
+    "created_at": "2026-03-10T09:00:00Z",
+    "updated_at": "2026-03-10T09:00:00Z",
+    "due_date": "2026-04-10",
+    "estimated_hours": 4,
+    "tags": ["documentation", "api", "auth"],
+    "activity": [
+      {"timestamp": "2026-03-10T09:00:00Z", "type": "created", "message": "Task created. Waiting for auth implementation to finalize.", "actor_id": "emp-005"}
+    ]
+  },
+  {
+    "id": "task-010",
+    "title": "Load testing suite for auth endpoints",
+    "description": "Design and execute load tests simulating peak authentication traffic. Validate token refresh under concurrent load and measure latency percentiles.",
+    "status": "backlog",
+    "priority": "medium",
+    "project_id": "proj-001",
+    "assignee_ids": ["emp-002", "emp-006"],
+    "dependency_ids": ["task-003", "task-004"],
+    "progress_percent": 0,
+    "created_at": "2026-03-15T09:00:00Z",
+    "updated_at": "2026-03-15T09:00:00Z",
+    "due_date": "2026-04-12",
+    "estimated_hours": 5,
+    "tags": ["testing", "load-testing", "performance", "auth"],
+    "activity": [
+      {"timestamp": "2026-03-15T09:00:00Z", "type": "created", "message": "Task created. Depends on integration and manual tests completing first.", "actor_id": "emp-005"}
+    ]
+  },
+  {
+    "id": "task-011",
+    "title": "Update migration runbook",
+    "description": "Finalize the operations runbook for the auth migration deployment. Include rollback procedures, monitoring dashboards, and incident response steps.",
+    "status": "backlog",
+    "priority": "low",
+    "project_id": "proj-001",
+    "assignee_ids": ["emp-003"],
+    "dependency_ids": [],
+    "progress_percent": 0,
+    "created_at": "2026-03-18T09:00:00Z",
+    "updated_at": "2026-03-18T09:00:00Z",
+    "due_date": "2026-04-14",
+    "estimated_hours": 3,
+    "tags": ["documentation", "operations", "runbook"],
+    "activity": [
+      {"timestamp": "2026-03-18T09:00:00Z", "type": "created", "message": "Task created for post-sprint documentation.", "actor_id": "emp-005"}
+    ]
+  },
+  {
+    "id": "task-012",
+    "title": "Design system token updates",
+    "description": "Update the design system tokens (colors, spacing, typography) to align with the new auth flow UI. Ensure backward compatibility with existing components.",
+    "status": "done",
+    "priority": "medium",
+    "project_id": "proj-002",
+    "assignee_ids": ["emp-008"],
+    "dependency_ids": [],
+    "progress_percent": 100,
+    "created_at": "2026-03-05T09:00:00Z",
+    "updated_at": "2026-03-22T15:00:00Z",
+    "due_date": "2026-03-25",
+    "estimated_hours": 4,
+    "tags": ["frontend", "design-system", "tokens"],
+    "activity": [
+      {"timestamp": "2026-03-22T15:00:00Z", "type": "status_change", "message": "Status changed from in-review to done. All design tokens updated and verified.", "actor_id": "emp-008"},
+      {"timestamp": "2026-03-20T10:00:00Z", "type": "status_change", "message": "Status changed from in-progress to in-review", "actor_id": "emp-008"},
+      {"timestamp": "2026-03-12T09:00:00Z", "type": "status_change", "message": "Status changed from backlog to in-progress", "actor_id": "emp-008"}
+    ]
+  },
+  {
+    "id": "task-013",
+    "title": "Fine-tune base model on domain data",
+    "description": "Run supervised fine-tuning on the 50K domain-specific instruction dataset. Optimize learning rate schedule and batch size for convergence.",
+    "status": "in-progress",
+    "priority": "high",
+    "project_id": "proj-004",
+    "assignee_ids": ["emp-001"],
+    "dependency_ids": [],
+    "progress_percent": 55,
+    "created_at": "2026-03-15T09:00:00Z",
+    "updated_at": "2026-03-27T06:00:00Z",
+    "due_date": "2026-04-01",
+    "estimated_hours": 40,
+    "tags": ["ml", "fine-tuning", "training"],
+    "activity": [
+      {"timestamp": "2026-03-27T06:00:00Z", "type": "commit", "message": "Epoch 3/5 complete, loss converging at 0.42", "actor_id": "emp-001"}
+    ]
+  },
+  {
+    "id": "task-014",
+    "title": "Build evaluation pipeline",
+    "description": "Create automated evaluation pipeline with BLEU, ROUGE, and custom domain metrics. Include human eval framework.",
+    "status": "in-progress",
+    "priority": "medium",
+    "project_id": "proj-004",
+    "assignee_ids": ["emp-010"],
+    "dependency_ids": [],
+    "progress_percent": 35,
+    "created_at": "2026-03-16T09:00:00Z",
+    "updated_at": "2026-03-26T16:00:00Z",
+    "due_date": "2026-04-05",
+    "estimated_hours": 30,
+    "tags": ["ml", "evaluation", "pipeline"],
+    "activity": [
+      {"timestamp": "2026-03-26T16:00:00Z", "type": "commit", "message": "Added BLEU and ROUGE metric runners", "actor_id": "emp-010"}
+    ]
+  },
+  {
+    "id": "task-015",
+    "title": "Set up RLHF reward model",
+    "description": "Train reward model on preference data. Architecture: deberta-v3-large with custom head.",
+    "status": "backlog",
+    "priority": "high",
+    "project_id": "proj-004",
+    "assignee_ids": ["emp-001"],
+    "dependency_ids": ["task-013"],
+    "progress_percent": 0,
+    "created_at": "2026-03-17T09:00:00Z",
+    "updated_at": "2026-03-17T09:00:00Z",
+    "due_date": "2026-04-15",
+    "estimated_hours": 35,
+    "tags": ["ml", "rlhf", "reward-model"],
+    "activity": []
+  },
+  {
+    "id": "task-016",
+    "title": "Implement DPO training loop",
+    "description": "Direct Preference Optimization as alternative/complement to RLHF. Implement reference model comparison.",
+    "status": "backlog",
+    "priority": "medium",
+    "project_id": "proj-004",
+    "assignee_ids": ["emp-001"],
+    "dependency_ids": ["task-015"],
+    "progress_percent": 0,
+    "created_at": "2026-03-17T09:00:00Z",
+    "updated_at": "2026-03-17T09:00:00Z",
+    "due_date": "2026-04-25",
+    "estimated_hours": 25,
+    "tags": ["ml", "dpo", "training"],
+    "activity": []
+  },
+  {
+    "id": "task-017",
+    "title": "Deploy model serving infrastructure",
+    "description": "Set up vLLM or TGI for inference. Configure auto-scaling, load balancing, and A/B test routing.",
+    "status": "backlog",
+    "priority": "medium",
+    "project_id": "proj-004",
+    "assignee_ids": ["emp-010"],
+    "dependency_ids": ["task-013"],
+    "progress_percent": 0,
+    "created_at": "2026-03-17T09:00:00Z",
+    "updated_at": "2026-03-17T09:00:00Z",
+    "due_date": "2026-05-01",
+    "estimated_hours": 20,
+    "tags": ["infra", "deployment", "serving"],
+    "activity": []
+  },
+  {
+    "id": "task-018",
+    "title": "Run human evaluation benchmark",
+    "description": "Coordinate with external annotators to evaluate model outputs on safety, helpfulness, and accuracy.",
+    "status": "backlog",
+    "priority": "low",
+    "project_id": "proj-004",
+    "assignee_ids": ["emp-006"],
+    "dependency_ids": ["task-014"],
+    "progress_percent": 0,
+    "created_at": "2026-03-17T09:00:00Z",
+    "updated_at": "2026-03-17T09:00:00Z",
+    "due_date": "2026-05-10",
+    "estimated_hours": 15,
+    "tags": ["evaluation", "human-eval", "safety"],
+    "activity": []
+  },
+  {
+    "id": "task-019",
+    "title": "Set up React Native project scaffold",
+    "description": "Initialize React Native project with navigation, state management, and component library.",
+    "status": "in-progress",
+    "priority": "high",
+    "project_id": "proj-003",
+    "assignee_ids": ["emp-010"],
+    "dependency_ids": [],
+    "progress_percent": 30,
+    "created_at": "2026-03-20T09:00:00Z",
+    "updated_at": "2026-03-26T14:00:00Z",
+    "due_date": "2026-04-05",
+    "estimated_hours": 20,
+    "tags": ["mobile", "react-native", "setup"],
+    "activity": [
+      {"timestamp": "2026-03-26T14:00:00Z", "type": "commit", "message": "Navigation structure and Redux store configured", "actor_id": "emp-010"}
+    ]
+  },
+  {
+    "id": "task-020",
+    "title": "Design offline-first data layer",
+    "description": "Architect the local-first data sync strategy using WatermelonDB or similar.",
+    "status": "pending",
+    "priority": "high",
+    "project_id": "proj-003",
+    "assignee_ids": ["emp-004"],
+    "dependency_ids": ["task-019"],
+    "progress_percent": 0,
+    "pending_reason": {
+      "type": "review_needed",
+      "icon": "\ud83d\udc41",
+      "summary": "UX design review pending from Agent-Delta",
+      "details": "The offline-first data layer architecture needs UX review to ensure the sync UI patterns work well. Agent-Delta (UX Designer) is currently pending on another task.",
+      "pending_since": "2026-03-26T09:00:00Z",
+      "resolution": {
+        "prompt": "How would you like to resolve this?",
+        "options": [
+          {"id": "expedite", "label": "Request expedited review from Agent-Delta", "description": "Send priority review request to Agent-Delta", "action_type": "expedite", "requires_input": false},
+          {"id": "reassign", "label": "Assign to different reviewer", "description": "Pick another team member for the UX review", "action_type": "reassign", "requires_input": true, "input_type": "select", "input_label": "Select reviewer", "input_options": ["Agent-Gamma", "Emma Nguyen", "Sarah Chen"]},
+          {"id": "skip", "label": "Skip review — proceed without", "description": "Proceed without UX review (requires justification)", "action_type": "skip", "requires_input": true, "input_type": "text", "input_label": "Justification", "input_placeholder": "Explain why UX review can be skipped..."},
+          {"id": "dismiss", "label": "Keep waiting", "description": "No action needed right now", "action_type": "dismiss", "requires_input": false}
+        ]
+      }
+    },
+    "created_at": "2026-03-20T09:00:00Z",
+    "updated_at": "2026-03-20T09:00:00Z",
+    "due_date": "2026-04-20",
+    "estimated_hours": 30,
+    "tags": ["mobile", "offline", "data"],
+    "activity": []
+  },
+  {
+    "id": "task-021",
+    "title": "Implement push notification service",
+    "description": "Set up Firebase Cloud Messaging with deep linking and notification channels.",
+    "status": "backlog",
+    "priority": "medium",
+    "project_id": "proj-003",
+    "assignee_ids": ["emp-010"],
+    "dependency_ids": ["task-019"],
+    "progress_percent": 0,
+    "created_at": "2026-03-20T09:00:00Z",
+    "updated_at": "2026-03-20T09:00:00Z",
+    "due_date": "2026-04-30",
+    "estimated_hours": 15,
+    "tags": ["mobile", "notifications", "firebase"],
+    "activity": []
+  },
+  {
+    "id": "task-022",
+    "title": "Create CI/CD pipeline for mobile builds",
+    "description": "Set up Fastlane + GitHub Actions for iOS and Android builds, testing, and deployment.",
+    "status": "backlog",
+    "priority": "low",
+    "project_id": "proj-003",
+    "assignee_ids": ["emp-002"],
+    "dependency_ids": [],
+    "progress_percent": 0,
+    "created_at": "2026-03-20T09:00:00Z",
+    "updated_at": "2026-03-20T09:00:00Z",
+    "due_date": "2026-04-15",
+    "estimated_hours": 12,
+    "tags": ["mobile", "cicd", "devops"],
+    "activity": []
+  }
+]

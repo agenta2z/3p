@@ -1,0 +1,31 @@
+{
+  "name": "mock_task",
+  "asynchronous": true,
+  "is_bridge": true,
+  "executor": "openteam.server.resources.tools.mock_task.executor:execute",
+  "description": "[DEV] Run a mocked composing-BTA pipeline for graph visualization testing. No LLM calls.",
+  "tool_type": "Action",
+  "category": "development",
+  "agent_enabled": false,
+  "parameters": [
+    {
+      "name": "--profile",
+      "type": "string",
+      "default": "default",
+      "description": "Topology profile: default | huge | flat | error | slow"
+    },
+    {
+      "name": "--speed",
+      "type": "float",
+      "default": 1.0,
+      "description": "Delay multiplier (0.5 = 2x faster, 2.0 = 2x slower)"
+    },
+    {
+      "name": "--seed",
+      "type": "int",
+      "default": 0,
+      "description": "Deterministic seed for timing variation"
+    }
+  ],
+  "returns": "Mock report (no real artifacts produced)."
+}

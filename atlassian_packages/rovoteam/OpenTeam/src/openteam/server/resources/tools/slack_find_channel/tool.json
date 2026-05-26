@@ -1,0 +1,36 @@
+{
+  "name": "slack_find_channel",
+  "tool_type": "Action",
+  "category": "utility",
+  "description": "Resolve a Slack channel name (like #team-ai-lab) to a channel ID by paginating accessible channels.",
+  "parameters": [
+    {
+      "name": "--channel_name",
+      "type": "string",
+      "description": "Slack channel name to resolve, with or without leading #."
+    },
+    {
+      "name": "--channel_id",
+      "type": "string",
+      "description": "Exact Slack channel ID to look up."
+    },
+    {
+      "name": "--types",
+      "type": "string",
+      "default": "public_channel,private_channel",
+      "description": "Comma-separated conversation types to scan."
+    },
+    {
+      "name": "--exclude_archived",
+      "type": "flag",
+      "default": true,
+      "description": "Exclude archived channels while resolving."
+    }
+  ],
+  "usage_guidance": "Provide at least one of channel_name or channel_id. Paginates all accessible channels to find a match.",
+  "returns": "JSON with ok, found (bool), channel object (if found), and total_channels_scanned.",
+  "examples": [
+    "slack_find_channel --channel_name team-ai-lab",
+    "slack_find_channel --channel_id C1234567890"
+  ]
+}

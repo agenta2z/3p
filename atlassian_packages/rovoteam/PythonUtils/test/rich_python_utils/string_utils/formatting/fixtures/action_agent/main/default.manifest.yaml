@@ -1,0 +1,16 @@
+version: "1.0"
+description: "Test manifest for default template"
+
+variables:
+  - notes.mindset
+  - notes.clarification
+  - notes.alternatives
+
+overrides:
+  notes.custom:
+    content: |
+      Custom inline content for testing.
+      This is defined directly in the manifest.
+
+variable_versions:
+  notes.mindset: "enterprise"

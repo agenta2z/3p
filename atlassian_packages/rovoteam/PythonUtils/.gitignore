@@ -1,0 +1,28 @@
+# Ignore development and build artifacts
+_dev/
+_archive/
+_docs/
+_plan/
+_runtime/
+_tmp/
+_logs/
+__pycache__/
+_tmp*
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.log
+
+# Ignore pytest-related files
+.pytest_cache/
+.pytest_*
+
+# Ignore IDE/editor configurations
+.idea/
+.idea_*
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+.hypothesis/

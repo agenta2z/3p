@@ -1,0 +1,76 @@
+{
+  "emp-001": [
+    {
+      "id": "crash-001",
+      "employee_id": "emp-001",
+      "timestamp": "2026-03-20T03:15:00Z",
+      "error_type": "OOM",
+      "description": "Out of memory during inference batch processing",
+      "severity": "high",
+      "self_healed": true,
+      "self_heal_action": "Reduced batch size 64\u219232, cleared GPU cache",
+      "recovery_time_seconds": 45,
+      "root_cause_analysis": "Batch size exceeded available VRAM during concurrent model loading",
+      "related_task_id": "task-013"
+    }
+  ],
+  "emp-002": [],
+  "emp-003": [
+    {
+      "id": "crash-002",
+      "employee_id": "emp-003",
+      "timestamp": "2026-03-22T14:30:00Z",
+      "error_type": "StackOverflow",
+      "description": "Recursive dependency resolution exceeded stack limit",
+      "severity": "medium",
+      "self_healed": false,
+      "self_heal_action": null,
+      "recovery_time_seconds": null,
+      "root_cause_analysis": "Circular dependency in task graph not detected by validator",
+      "related_task_id": "task-009"
+    }
+  ],
+  "emp-004": [
+    {
+      "id": "crash-003",
+      "employee_id": "emp-004",
+      "timestamp": "2026-03-19T08:00:00Z",
+      "error_type": "TimeoutError",
+      "description": "Schema validation timed out on large OpenAPI spec",
+      "severity": "medium",
+      "self_healed": true,
+      "self_heal_action": "Switched to streaming validator, increased timeout to 30s",
+      "recovery_time_seconds": 12,
+      "root_cause_analysis": "Synchronous validation on 5000+ line spec exceeded 10s default timeout",
+      "related_task_id": "task-007"
+    },
+    {
+      "id": "crash-004",
+      "employee_id": "emp-004",
+      "timestamp": "2026-03-21T11:45:00Z",
+      "error_type": "ConnectionReset",
+      "description": "Lost connection to Figma API during design export",
+      "severity": "low",
+      "self_healed": true,
+      "self_heal_action": "Retried with exponential backoff, 3 attempts",
+      "recovery_time_seconds": 8,
+      "root_cause_analysis": "Transient network issue during peak API usage",
+      "related_task_id": "task-007"
+    }
+  ],
+  "emp-010": [
+    {
+      "id": "crash-005",
+      "employee_id": "emp-010",
+      "timestamp": "2026-03-23T16:20:00Z",
+      "error_type": "DatabaseLockTimeout",
+      "description": "PostgreSQL advisory lock acquisition timed out during migration",
+      "severity": "high",
+      "self_healed": true,
+      "self_heal_action": "Released stale locks, retried migration with shorter transaction scope",
+      "recovery_time_seconds": 30,
+      "root_cause_analysis": "Long-running transaction held advisory lock beyond expected duration",
+      "related_task_id": "task-014"
+    }
+  ]
+}

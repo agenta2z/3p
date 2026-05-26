@@ -1,0 +1,12 @@
+{
+  "name": "slack_delete_message",
+  "tool_type": "Action",
+  "category": "communication",
+  "description": "Delete a Slack message.",
+  "parameters": [
+    {"name": "channel_id", "type": "string", "required": true, "description": "Slack channel ID."},
+    {"name": "message_id", "type": "string", "required": true, "description": "Message timestamp to delete."}
+  ],
+  "returns": "JSON with ok status.",
+  "examples": ["slack_delete_message C123 1712023032.1234"]
+}

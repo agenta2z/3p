@@ -1,0 +1,12 @@
+{
+  "name": "slack_pin_message",
+  "tool_type": "Action",
+  "category": "communication",
+  "description": "Pin a message in a Slack channel.",
+  "parameters": [
+    {"name": "channel_id", "type": "string", "required": true, "description": "Slack channel ID."},
+    {"name": "message_id", "type": "string", "required": true, "description": "Message timestamp to pin."}
+  ],
+  "returns": "JSON with ok status.",
+  "examples": ["slack_pin_message C123 1712023032.1234"]
+}

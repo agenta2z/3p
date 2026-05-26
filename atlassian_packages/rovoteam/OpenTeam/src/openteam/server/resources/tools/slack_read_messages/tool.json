@@ -1,0 +1,15 @@
+{
+  "name": "slack_read_messages",
+  "tool_type": "Action",
+  "category": "communication",
+  "description": "Read recent messages from a Slack channel or thread using conversations.history/replies.",
+  "parameters": [
+    {"name": "channel_id", "type": "string", "required": true, "description": "Slack channel ID."},
+    {"name": "--limit", "type": "int", "default": 20, "description": "Max messages to return."},
+    {"name": "--thread_id", "type": "string", "description": "Thread timestamp to read replies from."},
+    {"name": "--before", "type": "string", "description": "Only messages before this timestamp."},
+    {"name": "--after", "type": "string", "description": "Only messages after this timestamp."}
+  ],
+  "returns": "JSON with messages array and has_more flag.",
+  "examples": ["slack_read_messages C123 --limit 10", "slack_read_messages C123 --thread_id 1712023032.1234"]
+}

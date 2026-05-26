@@ -1,0 +1,12 @@
+{
+  "name": "slack_list_reactions",
+  "tool_type": "Action",
+  "category": "communication",
+  "description": "List all emoji reactions on a Slack message.",
+  "parameters": [
+    {"name": "channel_id", "type": "string", "required": true, "description": "Slack channel ID."},
+    {"name": "message_id", "type": "string", "required": true, "description": "Message timestamp."}
+  ],
+  "returns": "JSON with list of reactions (name, count, users).",
+  "examples": ["slack_list_reactions C123 1712023032.1234"]
+}

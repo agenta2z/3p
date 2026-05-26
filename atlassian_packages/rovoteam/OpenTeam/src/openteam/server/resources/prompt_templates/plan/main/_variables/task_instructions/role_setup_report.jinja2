@@ -1,0 +1,45 @@
+Synthesize ALL skill/tool creation results into a comprehensive **Role Setup Report** in Markdown. This report documents the complete setup of an AI employee role — what was associated, what was created, and how everything connects.
+
+### Required Sections
+
+## 1. Role Summary
+Brief overview of the role being set up: name, purpose, primary responsibilities, and organizational fit. Reference the original role document.
+
+## 2. Existing Tools Associated
+For each tool already in the system that maps to a role need:
+- Tool name and current description
+- Which role responsibility/SOP it supports
+- Any configuration or customization needed for this role
+- Present as a table: | Tool | Role Need | Configuration |
+
+## 3. New Tools/Skills Created
+For each newly created tool/skill, summarize:
+- **Name** and **description**
+- **Parameters** (key inputs)
+- **What it does** (in 2-3 sentences)
+- **Which role responsibility/SOP** it supports
+- **Implementation approach** (API calls, integrations, etc.)
+- **Key design decisions** from the research
+
+## 4. SOPs & Workflow Wiring
+For each SOP in the role document, map which tools (existing + new) support each step:
+- Present as a table: | SOP Step | Tool(s) | How Used |
+- Identify any SOP steps that remain manual (no tool support)
+- Note workflow sequences where tools should be chained
+
+## 5. Gaps & Future Work
+- Capabilities from the role document that are NOT fully addressed by any tool
+- Tools that were created but may need further refinement
+- Integration points that need engineering work beyond the tool specification
+- Prioritized list of follow-up items
+
+## 6. Verification Plan
+- For each new tool: example invocation and expected output
+- End-to-end test scenarios: "Given [role task], the role should be able to [use tool X to achieve Y]"
+- Metrics: how to measure whether the role setup is effective
+
+### Quality Requirements
+- **Traceability**: Every tool association/creation should trace back to a specific role document section
+- **Completeness**: The report should account for ALL tools, skills, and capabilities referenced anywhere in the role document — including those mentioned in responsibilities, SOPs, and collaboration patterns
+- **Actionability**: The report should be usable by an engineer to implement the remaining wiring
+- **No duplication**: If the same tool serves multiple role needs, list it once and cross-reference

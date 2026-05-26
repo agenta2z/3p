@@ -1,0 +1,51 @@
+# Default mock_task profile — mirrors role_setup composition
+# Outer BTA: breakdown → 5 inner BTAs (3 creation + 1 investigation + 1 association) → aggregator
+_target_: BTA
+name: null
+
+breakdown_inferencer:
+  _target_: MockBreakdownInferencer
+  delay_s: 1.5
+  subtasks:
+    - {description: "Create Auth API skill", args: {task_preamble: skill_tool_creation}}
+    - {description: "Create DB query tool", args: {task_preamble: skill_tool_creation}}
+    - {description: "Create Logging skill", args: {task_preamble: skill_tool_creation}}
+    - {description: "Create Metrics tool", args: {task_preamble: skill_tool_creation}}
+    - {description: "Wire existing skills", args: {task_preamble: skill_tool_association}}
+
+worker_factory:
+  skill_tool_creation:
+    _target_: BTA
+    name: null
+    breakdown_inferencer:
+      _target_: MockBreakdownInferencer
+      delay_s: 0.8
+      subtasks:
+        - {description: "Research existing implementations"}
+        - {description: "Identify capability gaps"}
+        - {description: "Define new specifications"}
+    worker_factory:
+      __default__:
+        _target_: MockWorker
+        duration_s: 2.0
+    aggregator_inferencer:
+      _target_: MockAggregator
+      delay_s: 1.0
+    breakdown_format: json_subtasks
+    max_breakdown: 5
+    debug_mode: false
+  skill_tool_association:
+    _target_: MockWorker
+    duration_s: 3.0
+  __default__: skill_tool_creation
+
+aggregator_inferencer:
+  _target_: MockAggregator
+  delay_s: 2.0
+  output_template: "# Mock Role Setup Report\n\n5 subtasks completed. All skills and tools created."
+
+breakdown_format: json_subtasks
+task_type_arg_name: task_preamble
+max_breakdown: 8
+max_concurrency: 3
+debug_mode: false

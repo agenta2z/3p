@@ -1,0 +1,26 @@
+{
+  "name": "slack_search_files",
+  "tool_type": "Action",
+  "category": "utility",
+  "description": "Search Slack files using the Slack Web API search.files endpoint.",
+  "parameters": [
+    {
+      "name": "query",
+      "type": "string",
+      "required": true,
+      "positional": true,
+      "description": "Search query for Slack files."
+    },
+    {
+      "name": "--count",
+      "type": "int",
+      "default": 20,
+      "description": "Maximum number of results (1-100)."
+    }
+  ],
+  "returns": "JSON with ok, total, matches (list of file objects), and paging info.",
+  "examples": [
+    "slack_search_files \"design document\"",
+    "slack_search_files \"architecture diagram\" --count 5"
+  ]
+}

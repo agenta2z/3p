@@ -1,0 +1,65 @@
+Produce a **Role-Tool Association** that maps every existing tool and skill to this role's responsibilities, SOPs, and workflows.
+
+## What to Investigate
+
+For each existing tool or skill, read the actual `tool.json` and `SKILL.md` files and determine:
+- Which role responsibilities, SOP steps, or KPIs it supports (cite section numbers)
+- How the role would use it in day-to-day operations
+- Whether it fully covers the need, partially covers it, or has a gap
+
+## Output
+
+You MUST produce TWO outputs:
+
+### 1. Structured JSON — write to `outputs/role_tool_association.json`
+
+Write a JSON file to `outputs/role_tool_association.json` using `create_file` with this exact schema:
+
+```json
+{
+  "role": "<role-name>",
+  "skills": [
+    {
+      "name": "<skill-name-kebab-case>",
+      "relevance": "high",
+      "responsibilities": ["§3 Program Orchestration", "SOP 1 Daily Standup"],
+      "notes": "optional: configuration or usage notes"
+    }
+  ],
+  "tools": [
+    {
+      "name": "<tool-name-snake-case>",
+      "relevance": "high",
+      "responsibilities": ["SOP 1 Step 3", "§4 Stakeholder Communication"],
+      "notes": "optional: configuration or usage notes"
+    }
+  ],
+  "gaps": [
+    {
+      "area": "CI/CD Monitoring",
+      "description": "No existing tool covers pipeline health or DORA metrics"
+    }
+  ]
+}
+```
+
+Rules for the JSON:
+- `skills` — ONLY existing skills that are relevant to this role
+- `tools` — ONLY existing tools that are relevant to this role
+- `relevance` — "high" (critical for day-to-day), "medium" (regular use), "low" (occasional)
+- `responsibilities` — cite specific role document sections (e.g., "§5 Delivery Effectiveness", "SOP 3 Step 2")
+- `gaps` — areas where NO existing tool/skill covers the role's needs
+- If a tool is NOT relevant to this role, omit it entirely
+
+### 2. Summary text — write inside `<Response>` tags
+
+Wrap a concise human-readable summary in `<Response>` tags. This summary is passed to the outer aggregator for the final role setup report. Include:
+- How many skills/tools were mapped
+- Key responsibility areas and their coverage
+- Notable gaps
+
+## Important
+
+- Read the actual `tool.json` and `SKILL.md` files — do not rely on names alone
+- The JSON file is used programmatically to configure the role — it must be valid JSON and contain only real, existing tool/skill names
+- Do NOT write any additional files (e.g., `implementation_report.md`, `summary.md`, `README.md`). Only `outputs/role_tool_association.json` should be written. Your human-readable summary belongs ONLY in the `<Response>` tags.

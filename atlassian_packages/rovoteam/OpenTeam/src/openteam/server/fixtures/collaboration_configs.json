@@ -1,0 +1,45 @@
+{
+  "emp-001": {
+    "employee_id": "emp-001",
+    "default_cross_org": "request",
+    "rules": [
+      {"target_type": "org", "target_id": "org-002", "scope": "full", "note": "Shares ML models with production team for deployment"},
+      {"target_type": "role", "target_id": "QA / Testing Engineer", "scope": "full", "note": "Full collaboration for model validation and testing"},
+      {"target_type": "role", "target_id": "UX Designer", "scope": "blocked", "note": "No direct design work — route through PM"},
+      {"target_type": "employee", "target_id": "emp-003", "scope": "read_only", "note": "PM can view research progress for sprint planning"}
+    ]
+  },
+  "emp-002": {
+    "employee_id": "emp-002",
+    "default_cross_org": "request",
+    "rules": [
+      {"target_type": "org", "target_id": "org-001", "scope": "full", "note": "Needs full access to AI Lab for integration testing of models"},
+      {"target_type": "role", "target_id": "Software Engineer", "scope": "full", "note": "Full collaboration for integration testing"},
+      {"target_type": "employee", "target_id": "emp-004", "scope": "read_only", "note": "Can review UX test plans for accessibility testing"}
+    ]
+  },
+  "emp-003": {
+    "employee_id": "emp-003",
+    "default_cross_org": "read_only",
+    "rules": [
+      {"target_type": "org", "target_id": "org-001", "scope": "read_only", "note": "Monitors AI Lab progress for stakeholder reporting"},
+      {"target_type": "org", "target_id": "org-002", "scope": "read_only", "note": "Monitors production metrics for sprint reviews"}
+    ]
+  },
+  "emp-004": {
+    "employee_id": "emp-004",
+    "default_cross_org": "blocked",
+    "rules": [
+      {"target_type": "org", "target_id": "org-002", "scope": "request", "note": "Needs production team approval for design system changes"},
+      {"target_type": "employee", "target_id": "emp-001", "scope": "read_only", "note": "Can view ML research outputs for data visualization design"}
+    ]
+  },
+  "emp-010": {
+    "employee_id": "emp-010",
+    "default_cross_org": "request",
+    "rules": [
+      {"target_type": "org", "target_id": "org-001", "scope": "full", "note": "Co-develops ML API integration with AI Lab"},
+      {"target_type": "org", "target_id": "org-003", "scope": "blocked", "note": "No direct customer-facing work permitted"}
+    ]
+  }
+}

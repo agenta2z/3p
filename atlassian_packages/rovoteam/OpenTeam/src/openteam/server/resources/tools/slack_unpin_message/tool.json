@@ -1,0 +1,12 @@
+{
+  "name": "slack_unpin_message",
+  "tool_type": "Action",
+  "category": "communication",
+  "description": "Unpin a message from a Slack channel.",
+  "parameters": [
+    {"name": "channel_id", "type": "string", "required": true, "description": "Slack channel ID."},
+    {"name": "message_id", "type": "string", "required": true, "description": "Message timestamp to unpin."}
+  ],
+  "returns": "JSON with ok status.",
+  "examples": ["slack_unpin_message C123 1712023032.1234"]
+}

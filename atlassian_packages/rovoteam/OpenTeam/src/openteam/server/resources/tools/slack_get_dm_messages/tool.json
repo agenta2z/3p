@@ -1,0 +1,32 @@
+{
+  "name": "slack_get_dm_messages",
+  "tool_type": "Action",
+  "category": "utility",
+  "aliases": ["slack_get_messages_with_user"],
+  "description": "Get DM messages with a specific Slack user. Finds the DM channel, reads history, and can filter to messages sent by a specific sender. Use for questions like 'what were my last messages to @someone?'",
+  "parameters": [
+    {
+      "name": "other_user_id",
+      "type": "string",
+      "required": true,
+      "positional": true,
+      "description": "Slack user ID of the other person in the DM conversation."
+    },
+    {
+      "name": "--sender_user_id",
+      "type": "string",
+      "description": "Optional Slack user ID to filter results to a specific sender (e.g., your own user ID)."
+    },
+    {
+      "name": "--limit",
+      "type": "int",
+      "default": 20,
+      "description": "Maximum messages to return (1-1000)."
+    }
+  ],
+  "returns": "JSON with ok, found (bool), other_user_id, channel, messages list, and message counts.",
+  "examples": [
+    "slack_get_dm_messages U1234567890",
+    "slack_get_dm_messages U1234567890 --sender_user_id U9876543210 --limit 10"
+  ]
+}

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "python-utils"
+version = "0.1.0"
+description = "Shared Python utilities library"
+requires-python = ">=3.10"
+dependencies = [
+    "attrs",
+    "pydantic",
+    "requests",
+    "rich",
+    "textual",
+    "typing-extensions",
+    "tqdm",
+    "PyYAML",
+    "scipy",
+    "scikit-learn",
+    "rank-bm25",
+    "lancedb",
+    "anthropic",
+    "httpx",
+    "jinja2",
+    "pybars3",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/python_utils"]
+
+[tool.pytest.ini_options]
+testpaths = ["test"]

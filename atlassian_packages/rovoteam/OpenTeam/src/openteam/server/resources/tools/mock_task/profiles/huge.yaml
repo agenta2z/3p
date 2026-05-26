@@ -1,0 +1,54 @@
+# Huge profile — stress test: 8 inner BTAs × 8 workers = 64 leaves
+_target_: BTA
+name: null
+
+breakdown_inferencer:
+  _target_: MockBreakdownInferencer
+  delay_s: 1.0
+  subtasks:
+    - {description: "Auth module", args: {task_preamble: creation}}
+    - {description: "DB module", args: {task_preamble: creation}}
+    - {description: "Cache module", args: {task_preamble: creation}}
+    - {description: "Logging module", args: {task_preamble: creation}}
+    - {description: "Metrics module", args: {task_preamble: creation}}
+    - {description: "Search module", args: {task_preamble: creation}}
+    - {description: "Queue module", args: {task_preamble: creation}}
+    - {description: "Config module", args: {task_preamble: creation}}
+
+worker_factory:
+  creation:
+    _target_: BTA
+    name: null
+    breakdown_inferencer:
+      _target_: MockBreakdownInferencer
+      delay_s: 0.5
+      subtasks:
+        - {description: "Research approach A"}
+        - {description: "Research approach B"}
+        - {description: "Investigate existing code"}
+        - {description: "Review documentation"}
+        - {description: "Analyze dependencies"}
+        - {description: "Check compatibility"}
+        - {description: "Benchmark performance"}
+        - {description: "Draft specification"}
+    worker_factory:
+      __default__:
+        _target_: MockWorker
+        duration_s: 1.5
+    aggregator_inferencer:
+      _target_: MockAggregator
+      delay_s: 0.8
+    breakdown_format: json_subtasks
+    max_breakdown: 8
+    debug_mode: false
+  __default__: creation
+
+aggregator_inferencer:
+  _target_: MockAggregator
+  delay_s: 2.0
+
+breakdown_format: json_subtasks
+task_type_arg_name: task_preamble
+max_breakdown: 8
+max_concurrency: 4
+debug_mode: false

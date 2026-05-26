@@ -1,0 +1,58 @@
+{
+  "in_flight": [
+    "MonitorEpic:https://hello.atlassian.net/browse/AI-236",
+    "MonitorPR:AI-237#https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30848",
+    "MonitorPR:AI-238#https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30864",
+    "MonitorPR:AI-239#https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30850",
+    "MonitorPR:AI-241#https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30873",
+    "MonitorPR:AI-242#https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30885",
+    "MonitorPR:AI-243#https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30847",
+    "MonitorPR:AI-244#https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30856"
+  ],
+  "issue_to_pr": {
+    "AI-243": {
+      "workspace": "atlassian",
+      "repo": "conversational-ai-platform",
+      "pr_id": 30847,
+      "pr_url": "https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30847"
+    },
+    "AI-237": {
+      "workspace": "atlassian",
+      "repo": "conversational-ai-platform",
+      "pr_id": 30848,
+      "pr_url": "https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30848"
+    },
+    "AI-239": {
+      "workspace": "atlassian",
+      "repo": "conversational-ai-platform",
+      "pr_id": 30850,
+      "pr_url": "https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30850"
+    },
+    "AI-244": {
+      "workspace": "atlassian",
+      "repo": "conversational-ai-platform",
+      "pr_id": 30856,
+      "pr_url": "https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30856"
+    },
+    "AI-238": {
+      "workspace": "atlassian",
+      "repo": "conversational-ai-platform",
+      "pr_id": 30864,
+      "pr_url": "https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30864"
+    },
+    "AI-241": {
+      "workspace": "atlassian",
+      "repo": "conversational-ai-platform",
+      "pr_id": 30873,
+      "pr_url": "https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30873"
+    },
+    "AI-242": {
+      "workspace": "atlassian",
+      "repo": "conversational-ai-platform",
+      "pr_id": 30885,
+      "pr_url": "https://bitbucket.org/atlassian/conversational-ai-platform/pull-requests/30885"
+    }
+  },
+  "completed": [],
+  "stuck": []
+}

@@ -1,0 +1,12 @@
+# PTI with single ClaudeCodeCli per phase (no Dual consensus). Cheaper PTI variant.
+_target_: agent_foundation.common.inferencers.agentic_inferencers.flow_inferencers.plan_then_implement_inferencer.PlanThenImplementInferencer
+planner_inferencer:
+  _target_: ClaudeCodeCLI
+  model_name: opus[1m]
+  permission_mode: bypassPermissions
+  idle_timeout_seconds: 300
+executor_inferencer:
+  _target_: ClaudeCodeCLI
+  model_name: opus[1m]
+  permission_mode: bypassPermissions
+  idle_timeout_seconds: 300

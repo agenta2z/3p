@@ -1,0 +1,98 @@
+Synthesize ALL research and investigation findings into comprehensive, implementable deliverables. The creation request above describes one or more **skills** and/or **tools** to create — produce a complete specification for each.
+
+- A **skill** (SKILL.md) provides specific workflow guidance on how to use existing tools.
+- A **tool** provides a new executable capability (tool.json + executor).
+
+---
+
+## For Each Skill (SKILL.md)
+
+Produce a complete SKILL.md with these sections:
+
+### 1. Skill Overview
+- **Name**: The skill's identifier (kebab-case, e.g., `program-orchestration`)
+- **Description**: What guidance this skill provides
+- **Codebase Search**: If codebase search tools (e.g. bash/grep for local repos, Github/Bitbucket for remote) are available, use them to discover related code, packages, internal SDKs, and even discovering related existing related tools and skills in other codebases you can migrate here. 
+- **Leveraged Tools**: Existing tools this skill guides the use of, with a brief capability summary for each (sourced from investigation findings)
+
+### 2. Workflow Mappings
+For each workflow or SOP the skill covers:
+- **Workflow name** and trigger conditions
+- **Step-by-step operational pattern**: Concrete sequence of tool commands, with:
+  * Which tool to call and with what parameters
+  * What to do with the response
+  * Decision points and branching conditions
+  * Where to communicate or persist results
+- **Example scenario**: A concrete end-to-end example showing the workflow in action
+
+### 3. Domain Operational Artifacts
+Document the key operational artifacts this skill encodes or references — sourced from the domain operational artifacts investigation:
+- **Runbooks & playbooks referenced**: Which runbooks or procedures this skill encodes as SOPs, with pointers to the source material
+- **Evaluation frameworks**: Quality criteria and assessment methods the skill applies
+- **Templates provided**: Reusable templates the skill surfaces for the role to use
+- **Reference materials**: Key docs, API references, or conventions the skill points to
+
+### 4. Domain Guidance
+- **Decision criteria**: Domain-specific judgment rules (e.g., escalation thresholds, priority scoring)
+- **Terminology**: Domain-specific terms and taxonomies the AI needs to understand
+- **Cadence patterns**: Recurring activities and schedules (if applicable)
+
+### 5. Integration Metadata
+- **Tools referenced**: Complete list of tool names and specific commands/operations used
+- **Cross-tool patterns**: How multiple tools are composed in multi-step workflows (e.g., query data from one tool, write results via another)
+- **Autonomy levels**: Which operations are autonomous vs. require human confirmation
+
+### 6. Operational Boundaries
+- **Safety boundaries**: What the AI should NOT do autonomously in this skill's domain
+- **Escalation triggers**: Conditions that require human intervention
+- **Error handling**: What to do when tool calls fail or return unexpected results
+
+### Quality Requirements for Skills
+- **Actionable**: Every workflow mapping must be concrete enough to follow without improvising — specific tool commands, parameters, and expected outputs
+- **Complete**: Cover ALL workflows and SOPs referenced in the creation request
+- **Work & Domain Grounded**: 
+  * Runbooks, eval frameworks, and query patterns from research findings must be explicitly encoded — do not leave operational knowledge implicit
+  * Every tool command reference must match capabilities discovered in investigation findings — do not invent operations that don't exist
+- **Traceable**: Reference which research or investigation finding supports each design decision
+
+---
+
+## For Each Tool (tool.json + Executor)
+
+Produce a complete tool specification:
+
+### 1. Tool Overview
+- **Name**: The tool's canonical name (snake_case)
+- **Description**: What the tool does and which high-value operation or domain artifact it automates (e.g. "Automates the ML training launch runbook", "Executes the team's standard experiment query pattern")
+- **Category**: utility, workflow, knowledge, or session
+- **Tool Type**: Action or Conversation
+
+### 2. Parameters
+For each parameter: name, type, required/optional, default, description, choices.
+If the tool has subcommands, define each with its own parameter table.
+
+### 3. Implementation
+- **Executor function signature** and key logic
+- **External API calls**: Endpoints, request/response formats
+- **Authentication**: Credentials needed and how they're sourced
+- **Error handling**: How each failure mode is handled
+
+### 4. Integration
+- **tool.json**: Complete, ready-to-write file content
+- **Executor registration**: How to wire into the dispatch
+- **Dependencies**: New packages or services required
+
+### 5. Usage Examples
+- 3-5 example invocations with expected outputs (including error cases)
+- How the tool fits into a typical workflow from the role's SOPs
+
+### 6. Testing Strategy
+- Unit test approach, integration tests, and edge cases to cover
+
+### Quality Requirements for Tools
+- **Implementable**: Enough detail to write code directly
+- **Consistent**: Follow patterns established by existing tools in the codebase
+- **Complete**: tool.json must be valid and match the expected schema
+- **Work & Domain Grounded**: 
+  * Every design decision must reference a research or investigation finding
+  * Each tool must trace back to a concrete operational need — a runbook to automate, a query pattern to encode, an eval workflow to execute

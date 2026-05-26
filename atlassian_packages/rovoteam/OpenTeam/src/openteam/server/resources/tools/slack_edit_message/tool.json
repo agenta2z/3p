@@ -1,0 +1,13 @@
+{
+  "name": "slack_edit_message",
+  "tool_type": "Action",
+  "category": "communication",
+  "description": "Edit an existing Slack message.",
+  "parameters": [
+    {"name": "channel_id", "type": "string", "required": true, "description": "Slack channel ID."},
+    {"name": "message_id", "type": "string", "required": true, "description": "Message timestamp to edit."},
+    {"name": "content", "type": "string", "required": true, "description": "New message text."}
+  ],
+  "returns": "JSON with ok status.",
+  "examples": ["slack_edit_message C123 1712023032.1234 \"Updated message text\""]
+}

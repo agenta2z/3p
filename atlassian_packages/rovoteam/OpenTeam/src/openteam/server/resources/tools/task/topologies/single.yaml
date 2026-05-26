@@ -1,0 +1,5 @@
+# Single ClaudeCodeCli — one model call, no consensus, no plan/implement split. Cheapest topology.
+_target_: ClaudeCodeCLI
+model_name: opus[1m]
+permission_mode: bypassPermissions
+idle_timeout_seconds: 300

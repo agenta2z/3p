@@ -1,0 +1,13 @@
+{
+  "name": "slack_react",
+  "tool_type": "Action",
+  "category": "communication",
+  "description": "Add an emoji reaction to a Slack message.",
+  "parameters": [
+    {"name": "channel_id", "type": "string", "required": true, "description": "Slack channel ID."},
+    {"name": "message_id", "type": "string", "required": true, "description": "Message timestamp (e.g., 1712023032.1234)."},
+    {"name": "emoji", "type": "string", "required": true, "description": "Emoji name or Unicode (e.g., ✅ or :white_check_mark:)."}
+  ],
+  "returns": "JSON with ok status.",
+  "examples": ["slack_react C123 1712023032.1234 ✅"]
+}

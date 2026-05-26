@@ -1,0 +1,142 @@
+{
+  "emp-001": [
+    {
+      "id": "dec-001",
+      "employee_id": "emp-001",
+      "timestamp": "2026-03-25T14:00:00Z",
+      "decision": "Implement Redis-based distributed lock for concurrent token refresh",
+      "reasoning": "Multiple concurrent requests may attempt to refresh the same token simultaneously. A distributed lock with 5-second TTL prevents duplicate refresh calls while the 3-second timeout fallback ensures requests are not blocked indefinitely if the lock holder crashes.",
+      "scope": "task-002",
+      "status": "approved",
+      "approved_by": "emp-005",
+      "actions": null
+    },
+    {
+      "id": "dec-002",
+      "employee_id": "emp-001",
+      "timestamp": "2026-03-24T09:00:00Z",
+      "decision": "Use RS256 algorithm for JWT signing instead of HS256",
+      "reasoning": "RS256 (asymmetric) allows token verification without sharing the signing secret. This is critical for the microservices architecture where multiple services need to verify tokens independently. The performance overhead is negligible with key caching.",
+      "scope": "task-002",
+      "status": "auto_approved",
+      "approved_by": null,
+      "actions": null
+    },
+    {
+      "id": "dec-003",
+      "employee_id": "emp-001",
+      "timestamp": "2026-03-26T06:00:00Z",
+      "decision": "Add graceful degradation path when Redis is unavailable for token locking",
+      "reasoning": "If Redis is down, the lock mechanism fails. Proposed fallback: use a local in-process lock with a warning log, accepting the small risk of duplicate refresh calls on a single node. This maintains availability over strict consistency.",
+      "scope": "task-002",
+      "status": "pending",
+      "approved_by": null,
+      "actions": [
+        {"id": "act-dec-001", "label": "Approve", "type": "approve"},
+        {"id": "act-dec-002", "label": "Reject", "type": "reject"},
+        {"id": "act-dec-003", "label": "Request more details", "type": "request_info"}
+      ]
+    }
+  ],
+  "emp-002": [
+    {
+      "id": "dec-004",
+      "employee_id": "emp-002",
+      "timestamp": "2026-03-25T12:00:00Z",
+      "decision": "Use 10 concurrent coroutines for token refresh load test",
+      "reasoning": "10 concurrent requests provides sufficient contention to validate the locking mechanism without overwhelming the test environment. This matches the expected peak concurrent refresh rate based on production metrics.",
+      "scope": "task-004",
+      "status": "auto_approved",
+      "approved_by": null,
+      "actions": null
+    },
+    {
+      "id": "dec-005",
+      "employee_id": "emp-002",
+      "timestamp": "2026-03-24T16:00:00Z",
+      "decision": "Add Redis lock cleanup assertion to integration tests",
+      "reasoning": "Verifying that the Redis lock key is properly cleaned up after token refresh completion prevents lock leaks that could cause cascading failures in production. This is a low-cost, high-value test assertion.",
+      "scope": "task-004",
+      "status": "auto_approved",
+      "approved_by": null,
+      "actions": null
+    },
+    {
+      "id": "dec-006",
+      "employee_id": "emp-002",
+      "timestamp": "2026-03-26T05:30:00Z",
+      "decision": "Defer remaining 2 edge case tests until Agent-Alpha provides fixture data",
+      "reasoning": "The expired-refresh-token and concurrent-rotation test cases require specific token payloads that only Agent-Alpha can generate from the implementation. Proceeding with placeholder data would produce unreliable tests.",
+      "scope": "task-004",
+      "status": "approved",
+      "approved_by": "emp-005",
+      "actions": null
+    }
+  ],
+  "emp-003": [
+    {
+      "id": "dec-007",
+      "employee_id": "emp-003",
+      "timestamp": "2026-03-22T10:00:00Z",
+      "decision": "Use Docusaurus for the new API documentation site",
+      "reasoning": "Docusaurus integrates well with OpenAPI specs, supports versioned docs, and the team already has experience with React-based tooling. Alternatives like MkDocs were considered but lack built-in API reference support.",
+      "scope": "task-009",
+      "status": "approved",
+      "approved_by": "emp-005",
+      "actions": null
+    },
+    {
+      "id": "dec-008",
+      "employee_id": "emp-003",
+      "timestamp": "2026-03-26T07:00:00Z",
+      "decision": "Pre-write documentation structure using the current schema draft",
+      "reasoning": "While the final auth implementation is not complete, the API contract is stable enough to write the documentation skeleton. This reduces the lead time once task-002 is done, and any delta can be patched quickly.",
+      "scope": "task-009",
+      "status": "pending",
+      "approved_by": null,
+      "actions": [
+        {"id": "act-dec-004", "label": "Approve", "type": "approve"},
+        {"id": "act-dec-005", "label": "Wait for implementation", "type": "reject"}
+      ]
+    }
+  ],
+  "emp-004": [
+    {
+      "id": "dec-009",
+      "employee_id": "emp-004",
+      "timestamp": "2026-03-23T15:00:00Z",
+      "decision": "Use cursor-based pagination instead of offset-based for v2 API",
+      "reasoning": "Cursor-based pagination provides stable results under concurrent writes, performs better on large datasets (no OFFSET scan), and aligns with industry best practices (Stripe, GitHub APIs). The trade-off is slightly more complex client implementation.",
+      "scope": "task-007",
+      "status": "auto_approved",
+      "approved_by": null,
+      "actions": null
+    },
+    {
+      "id": "dec-010",
+      "employee_id": "emp-004",
+      "timestamp": "2026-03-23T16:00:00Z",
+      "decision": "Adopt RFC 7807 Problem Details for error responses",
+      "reasoning": "RFC 7807 provides a standardized error response format that is well-supported by client libraries. Adding a custom `trace_id` extension enables end-to-end request tracing without breaking the standard format.",
+      "scope": "task-007",
+      "status": "approved",
+      "approved_by": "emp-007",
+      "actions": null
+    },
+    {
+      "id": "dec-011",
+      "employee_id": "emp-004",
+      "timestamp": "2026-03-24T10:00:00Z",
+      "decision": "Use Accept header versioning instead of URL path versioning",
+      "reasoning": "Accept header versioning keeps URLs clean and RESTful, avoids breaking existing client URL patterns, and allows granular per-resource versioning. However, this decision requires explicit approval from the Backend Engineer as it affects the entire API surface.",
+      "scope": "task-007",
+      "status": "pending",
+      "approved_by": null,
+      "actions": [
+        {"id": "act-dec-006", "label": "Approve", "type": "approve"},
+        {"id": "act-dec-007", "label": "Switch to URL path versioning", "type": "reject"},
+        {"id": "act-dec-008", "label": "Discuss alternatives", "type": "request_info"}
+      ]
+    }
+  ]
+}

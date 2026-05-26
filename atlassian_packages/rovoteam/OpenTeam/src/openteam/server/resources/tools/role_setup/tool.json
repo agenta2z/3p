@@ -1,0 +1,37 @@
+{
+  "name": "role_setup",
+  "slash_enabled": true,
+  "asynchronous": true,
+  "is_bridge": true,
+  "executor": "openteam.server.resources.tools.role_setup.executor:execute",
+  "description": "Set up an AI employee role by decomposing its role responsibility document into required skills and tools, researching and creating any missing capabilities, and producing a comprehensive Role Setup Report. Runs a nested breakdown-then-aggregate pipeline: outer breakdown identifies skill/tool subtasks (associate existing, extend, or create new); inner pipeline researches and synthesizes each subtask.",
+  "tool_type": "Action",
+  "category": "workflow",
+  "parameters": [
+    {
+      "name": "role_document_path",
+      "type": "path",
+      "required": true,
+      "positional": true,
+      "description": "Path to the role responsibility document (Markdown) produced by create_role. E.g. './roles/devops_engineer.md'."
+    },
+    {
+      "name": "--max-facets",
+      "type": "int",
+      "default": 8,
+      "description": "Maximum number of outer skill/tool subtasks to break the role into."
+    },
+    {
+      "name": "--max-inner-facets",
+      "type": "int",
+      "default": 5,
+      "description": "Maximum number of inner research subtasks per outer skill/tool subtask."
+    }
+  ],
+  "returns": "A Role Setup Report (role_setup_report.md) covering: existing tools associated to role needs, new tools/skills created, SOP-to-tool wiring, gaps and future work, and a verification plan.",
+  "examples": [
+    "role_setup \"./roles/devops_engineer.md\"",
+    "role_setup \"./roles/ml_engineer.md\" --max-facets 10",
+    "role_setup \"./roles/product_manager.md\" --max-facets 6 --max-inner-facets 3"
+  ]
+}

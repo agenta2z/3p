@@ -1,0 +1,83 @@
+{
+  "org-001": {
+    "org_id": "org-001",
+    "description": "AI Lab defaults: broad data read, code deploy, CI/CD access, no financials or secrets",
+    "entries": [
+      {"category": "data_access", "permission": "read_project_data", "granted": true},
+      {"category": "data_access", "permission": "read_employee_data", "granted": true},
+      {"category": "data_access", "permission": "read_financials", "granted": false},
+      {"category": "data_access", "permission": "read_audit_logs", "granted": true},
+      {"category": "data_access", "permission": "read_analytics", "granted": true},
+      {"category": "actions", "permission": "deploy_code", "granted": true},
+      {"category": "actions", "permission": "approve_prs", "granted": false},
+      {"category": "actions", "permission": "create_tasks", "granted": true},
+      {"category": "actions", "permission": "modify_sprints", "granted": false},
+      {"category": "actions", "permission": "merge_to_main", "granted": false},
+      {"category": "actions", "permission": "create_projects", "granted": false},
+      {"category": "actions", "permission": "delete_resources", "granted": false},
+      {"category": "actions", "permission": "manage_team_members", "granted": false},
+      {"category": "communication", "permission": "initiate_conversations", "granted": true},
+      {"category": "communication", "permission": "send_external_emails", "granted": false},
+      {"category": "communication", "permission": "post_to_slack", "granted": true},
+      {"category": "communication", "permission": "create_calendar_events", "granted": false},
+      {"category": "system_access", "permission": "access_cicd", "granted": true},
+      {"category": "system_access", "permission": "access_databases", "granted": true},
+      {"category": "system_access", "permission": "access_cloud_resources", "granted": false},
+      {"category": "system_access", "permission": "access_secrets_vault", "granted": false}
+    ]
+  },
+  "org-002": {
+    "org_id": "org-002",
+    "description": "AI Production defaults: deploy, merge, CI/CD, cloud access, no financials or team mgmt",
+    "entries": [
+      {"category": "data_access", "permission": "read_project_data", "granted": true},
+      {"category": "data_access", "permission": "read_employee_data", "granted": true},
+      {"category": "data_access", "permission": "read_financials", "granted": false},
+      {"category": "data_access", "permission": "read_audit_logs", "granted": true},
+      {"category": "data_access", "permission": "read_analytics", "granted": true},
+      {"category": "actions", "permission": "deploy_code", "granted": true},
+      {"category": "actions", "permission": "approve_prs", "granted": true},
+      {"category": "actions", "permission": "create_tasks", "granted": true},
+      {"category": "actions", "permission": "modify_sprints", "granted": false},
+      {"category": "actions", "permission": "merge_to_main", "granted": true},
+      {"category": "actions", "permission": "create_projects", "granted": false},
+      {"category": "actions", "permission": "delete_resources", "granted": false},
+      {"category": "actions", "permission": "manage_team_members", "granted": false},
+      {"category": "communication", "permission": "initiate_conversations", "granted": true},
+      {"category": "communication", "permission": "send_external_emails", "granted": false},
+      {"category": "communication", "permission": "post_to_slack", "granted": true},
+      {"category": "communication", "permission": "create_calendar_events", "granted": false},
+      {"category": "system_access", "permission": "access_cicd", "granted": true},
+      {"category": "system_access", "permission": "access_databases", "granted": true},
+      {"category": "system_access", "permission": "access_cloud_resources", "granted": true},
+      {"category": "system_access", "permission": "access_secrets_vault", "granted": false}
+    ]
+  },
+  "org-003": {
+    "org_id": "org-003",
+    "description": "Sales & CS defaults: broad read + communication, limited code/system access",
+    "entries": [
+      {"category": "data_access", "permission": "read_project_data", "granted": true},
+      {"category": "data_access", "permission": "read_employee_data", "granted": true},
+      {"category": "data_access", "permission": "read_financials", "granted": true},
+      {"category": "data_access", "permission": "read_audit_logs", "granted": false},
+      {"category": "data_access", "permission": "read_analytics", "granted": true},
+      {"category": "actions", "permission": "deploy_code", "granted": false},
+      {"category": "actions", "permission": "approve_prs", "granted": false},
+      {"category": "actions", "permission": "create_tasks", "granted": true},
+      {"category": "actions", "permission": "modify_sprints", "granted": true},
+      {"category": "actions", "permission": "merge_to_main", "granted": false},
+      {"category": "actions", "permission": "create_projects", "granted": true},
+      {"category": "actions", "permission": "delete_resources", "granted": false},
+      {"category": "actions", "permission": "manage_team_members", "granted": false},
+      {"category": "communication", "permission": "initiate_conversations", "granted": true},
+      {"category": "communication", "permission": "send_external_emails", "granted": true},
+      {"category": "communication", "permission": "post_to_slack", "granted": true},
+      {"category": "communication", "permission": "create_calendar_events", "granted": true},
+      {"category": "system_access", "permission": "access_cicd", "granted": false},
+      {"category": "system_access", "permission": "access_databases", "granted": false},
+      {"category": "system_access", "permission": "access_cloud_resources", "granted": false},
+      {"category": "system_access", "permission": "access_secrets_vault", "granted": false}
+    ]
+  }
+}

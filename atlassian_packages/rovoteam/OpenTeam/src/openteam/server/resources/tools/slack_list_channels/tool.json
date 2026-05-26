@@ -1,0 +1,37 @@
+{
+  "name": "slack_list_channels",
+  "tool_type": "Action",
+  "category": "utility",
+  "description": "List Slack channels you can access. Paginates across public and private channels by default.",
+  "parameters": [
+    {
+      "name": "--limit",
+      "type": "int",
+      "default": 100,
+      "description": "Maximum channels per page (1-1000)."
+    },
+    {
+      "name": "--exclude_archived",
+      "type": "flag",
+      "default": true,
+      "description": "Exclude archived channels."
+    },
+    {
+      "name": "--types",
+      "type": "string",
+      "default": "public_channel,private_channel",
+      "description": "Comma-separated conversation types for conversations.list."
+    },
+    {
+      "name": "--paginate_all",
+      "type": "flag",
+      "default": true,
+      "description": "Follow pagination cursors and aggregate all matching channels."
+    }
+  ],
+  "returns": "JSON with ok, channels list, page_count, and types.",
+  "examples": [
+    "slack_list_channels",
+    "slack_list_channels --limit 50 --exclude_archived"
+  ]
+}

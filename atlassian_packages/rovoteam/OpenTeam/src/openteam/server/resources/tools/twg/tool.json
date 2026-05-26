@@ -1,0 +1,24 @@
+{
+  "name": "twg",
+  "tool_type": "Action",
+  "category": "utility",
+  "description": "Query and manage Atlassian Teamwork Graph data (Jira, Confluence, Atlas, Loom, Bitbucket, Google Docs, Sharepoint) via the TWG CLI.",
+  "parameters": [
+    {
+      "name": "command",
+      "type": "string",
+      "required": true,
+      "positional": true,
+      "description": "TWG command arguments (e.g., 'jira workitem get --id PROJ-123', 'docs query --since 7d')."
+    }
+  ],
+  "usage_guidance": "Surface routing: Use federated surfaces first (docs, videos, meetings, spaces) for cross-product queries. Use native surfaces (jira, confluence, bitbucket, goals, projects, teams) for product-specific detail or mutations. Use projection surfaces (work, context, org-tree) for activity, hierarchy, and issue context. Workflow: 1) Pick the right surface. 2) Run 'twg <surface> <resource> --help' for flag details. 3) Execute. 4) If empty results, pivot to next surface family (federated->native). 5) Summarize key IDs/titles/statuses/URLs. Common commands: 'docs query --since 7d', 'videos query', 'meetings --since 14d --with-recordings', 'spaces query --keyword <term>', 'work query --scope me --since 7d', 'org-tree --name \"Jane Doe\" --up-only', 'context jira workitem PROJ-123 --depth 2', 'jira workitem get --id PROJ-123', 'confluence pages get 12345 --body-format adf', 'goals --scope me', 'projects --scope me --role contributor', 'teams query --query Platform', 'user-search --name \"Jane Doe\"', 'resolve --name \"Jane Doe\"'. For large goal exports use --sqlite-file. State intended changes before write operations. Prefer ADF bodies for Confluence pages. Do not generate storage XML.",
+  "returns": "Command output from the TWG CLI (typically structured text or JSON).",
+  "examples": [
+    "twg docs query --since 7d",
+    "twg jira workitem get --id PROJ-123",
+    "twg work query --scope me --since 7d",
+    "twg confluence search query --cql 'type=page AND contributor=currentUser() ORDER BY lastmodified DESC'",
+    "twg org-tree --name \"Jane Doe\" --up-only"
+  ]
+}

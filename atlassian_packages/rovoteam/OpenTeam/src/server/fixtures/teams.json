@@ -1,0 +1,41 @@
+[
+  {
+    "id": "team-001",
+    "name": "Platform Team",
+    "description": "Core platform and infrastructure",
+    "member_ids": ["emp-001", "emp-002", "emp-005", "emp-006", "emp-007", "emp-010"],
+    "project_ids": ["proj-001", "proj-002", "proj-004"],
+    "stats": {
+      "active_agents": 3,
+      "active_humans": 3,
+      "sprint_velocity": 34,
+      "completion_rate": 0.87
+    }
+  },
+  {
+    "id": "team-002",
+    "name": "Frontend Team",
+    "description": "User-facing features and design system",
+    "member_ids": ["emp-003", "emp-008", "emp-009"],
+    "project_ids": ["proj-002"],
+    "stats": {
+      "active_agents": 1,
+      "active_humans": 2,
+      "sprint_velocity": 28,
+      "completion_rate": 0.72
+    }
+  },
+  {
+    "id": "team-003",
+    "name": "Mobile Team",
+    "description": "Mobile app rebuild initiative",
+    "member_ids": ["emp-004", "emp-010", "emp-011", "emp-012"],
+    "project_ids": ["proj-003"],
+    "stats": {
+      "active_agents": 1,
+      "active_humans": 3,
+      "sprint_velocity": 22,
+      "completion_rate": 0.65
+    }
+  }
+]

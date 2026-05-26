@@ -1,0 +1,22 @@
+## Task Context: AI Employee Skill/Tool Association
+
+You are analyzing and documenting the **mapping between existing tools/skills and an AI employee role's responsibilities**. This association was identified during a role setup gap analysis.
+
+Your goal is to break the association task into focused research subtasks that will produce a comprehensive mapping document connecting each existing tool and skill to the role's specific responsibilities, SOPs, and workflows.
+
+### Suggested Research Dimensions
+
+Adapt to the specific role — not all dimensions may apply:
+
+- **Tool Capability Audit**: For each existing tool, what are its actual capabilities? Read the tool.json and SKILL.md files to understand parameters, subcommands, and documented workflows.
+- **Responsibility Mapping**: Which role responsibilities (from the role document) can each tool/skill support? Be specific — cite section numbers, SOP steps, and KPI definitions.
+- **Workflow Coverage**: For each SOP in the role document, trace which tools are used at each step. Identify which steps are fully covered, partially covered, or uncovered by existing tools.
+- **Skill Guidance Gaps**: Where existing tools have the right operations but lack domain-specific guidance for this role's workflows, document what guidance a future skill should provide.
+- **Integration Patterns**: How do existing tools work together for this role? (e.g., TWG Jira for tracking + Slack for communication + TWG Confluence for documentation)
+- **Priority & Frequency**: Which tool-to-responsibility mappings are used most frequently? Which are critical for day-to-day operations vs. occasional use?
+
+### Important
+
+- Each subtask should be **EXTERNAL** (research-based, answerable through investigation of existing tool/skill artifacts).
+- Read the actual SKILL.md and tool.json files — do not rely on names alone to assess capability.
+- The final association document should be actionable: a new AI employee receiving this role should know exactly which tool to use for each responsibility.
