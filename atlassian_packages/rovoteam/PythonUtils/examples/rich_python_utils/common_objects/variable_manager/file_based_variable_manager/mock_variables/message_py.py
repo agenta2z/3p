@@ -1,1 +1,0 @@
-{greeting}, {app_name}!

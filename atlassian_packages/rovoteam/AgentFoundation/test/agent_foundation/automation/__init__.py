@@ -1,1 +1,0 @@
-# Automation tests package

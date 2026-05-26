@@ -1,3 +1,0 @@
-Connection: {{connection_string}}
-Timeout: 30s
-Log Level: {{log_level}}

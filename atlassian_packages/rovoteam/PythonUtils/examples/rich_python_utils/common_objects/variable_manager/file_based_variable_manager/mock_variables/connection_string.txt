@@ -1,1 +1,0 @@
-postgresql://{{database_host}}:{{database_port}}/{{database}}

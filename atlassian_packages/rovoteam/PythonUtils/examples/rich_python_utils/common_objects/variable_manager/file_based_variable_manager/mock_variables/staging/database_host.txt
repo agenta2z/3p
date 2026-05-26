@@ -1,1 +1,0 @@
-staging-db.example.com
